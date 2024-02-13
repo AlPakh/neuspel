@@ -10,9 +10,9 @@ body{
 
 .header{
     display: flex;
-    padding: 10px 3.8vw;
+    padding: 10px 2vw;
     align-items: center;
-    gap: 3.8vw;
+    gap: 2vw;
     flex: 1 2 0;
     justify-content: left;
 
@@ -23,13 +23,13 @@ body{
     display: flex;
     align-items: center;
     justify-content: left;
-    gap: 3.8vw;
+    gap: 2vw;
 }
 
 .header_text{
     display: flex;
     align-items: center;
-    gap: 3.8vw;
+    gap: 2vw;
 }
 
 .logo{

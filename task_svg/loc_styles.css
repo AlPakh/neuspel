@@ -1,25 +1,27 @@
 .container {
   display: flex;
-  height: 95%;
-  width: 95%;
+  height: calc(95vh - 120px); /* 95% высоты экрана минус высота шапки */
+  width: 100%;
   justify-content: center;
   align-items: center;
   margin: auto;
+  overflow: hidden; 
 }
 
 .content-div {
   padding: 5px; 
-  overflow: auto; 
-  min-height: 500px; /* Пример минимальной высоты */
+  overflow: hidden; 
+  position: relative;
 
   width: 100%;
-  height:auto;
+  height: 100%;
+  min-height: 500px; /* Пример минимальной высоты */
 
   background-color: white;
 
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
