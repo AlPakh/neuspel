@@ -1,0 +1,189 @@
+body{
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    background: #0D0D0D;
+}
+
+.header{
+    display: flex;
+    padding: 10px 3.8vw;
+    align-items: center;
+    gap: 3.8vw;
+    flex: 1 2 0;
+    justify-content: left;
+
+    background: #000;
+}
+
+.header_main{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 3.8vw;
+}
+
+.header_text{
+    display: flex;
+    align-items: center;
+    gap: 3.8vw;
+}
+
+.logo{
+    width: 100px;
+    height: 100px;
+
+    /* fill: rgba(255, 255, 255, 0.00); */
+
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    user-select: none;
+}
+
+.overlap-group {
+  position: relative;
+  width: 84px;
+  height: 97px;
+}
+
+.d20_back{
+    width: 94px;
+    height: 94px;
+
+    fill: #F00;
+
+    clip-path: polygon(
+        45% 4%,
+        89% 28%,
+        89% 76%,
+        45% 100%,
+        1.5% 76%,
+        1.5% 28%
+    );
+    background-color: #ff0000;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff; 
+} 
+  
+.d20_lines {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: scaleY(0.95);
+  background: url("data:image/svg+xml,%3Csvg width='84' height='97' viewBox='0 0 82 96' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M41 1L64.5 31.5M41 1L17.5 31.5M41 1L0.5 24.5M41 1L81.5 24.5M64.5 31.5L41 72M64.5 31.5H17.5M64.5 31.5L81.5 24.5M64.5 31.5L81.5 71.5M41 72L17.5 31.5M41 72V95M41 72L0.5 71.5M41 72L81.5 71.5M17.5 31.5L0.5 24.5M17.5 31.5L0.5 71.5M0.5 24.5V71.5M0.5 71.5L41 95M41 95L81.5 71.5M81.5 24.5V71.5' stroke='black'/%3E%3C/svg%3E%0A");
+}
+
+.dice_letter, .tsi12{
+    position: absolute;
+    font-family: "Kyiv Type", Helvetica;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+}
+
+.tsi12 {
+    top: 34px;
+    left: 32px;
+    transform: rotate(60deg);
+    font-family: "Irish Grover", Helvetica;
+    font-size: 20px;
+  }
+  
+#letP {
+    top: 50px;
+    left: 11px;
+    transform: rotate(-120deg);
+  }
+  
+#letV {
+    top: 51px;
+    left: 58px;
+    transform: rotate(117.074deg);
+  }
+
+  #letA {
+    top: 8px;
+    left: 35px;
+  }
+
+.text_menu, .title, p{
+    color: #FFF;
+    font-family: "Kyiv Type", Helvetica, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    /*line-height: 32.4px; /* 162% */
+    /*letter-spacing: 0.54px;*/
+    text-decoration-line: underline;
+}
+
+.title{
+  display: flex;
+  font-size: 36px;
+  font-weight: 500;
+  width: auto;
+  /*flex: 1 1 210px;*/
+  /*line-height: 32.4px; /* 90% */
+}
+
+.text_menu{
+  display: flex;
+  flex: 1 2 auto;
+}
+
+@font-face {
+  font-family: 'Kyiv Type';
+  src: url('fonts/KyivTypeTitling-VarGX.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Irish Grover';
+  src: url('fonts/IrishGrover-Regular.ttf') format('truetype'),
+    url('https://fonts.googleapis.com/css?family=Irish+Grover&display=swap') format('truetype');
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  font-size: 18px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: rgb(255, 255, 255);
+  background-color: #0D0D0D;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-family: "Kyiv Type", Helvetica, sans-serif;
+}
+
+.dropdown-content a:hover {
+  background-color: #222222;
+  outline: 2px solid white;
+}
+
+.text_menu:hover .dropdown-content {
+  display: block;
+}
+
+.text_menu {
+  position: relative;
+  cursor: pointer;
+}

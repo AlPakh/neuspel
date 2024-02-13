@@ -1,0 +1,50 @@
+svg{
+  margin: 20px;
+  align-self: center;
+}
+
+#svgContent{
+    size: 200px 200px;
+    border-style: solid;
+}
+
+text{
+    user-select: none;
+}
+
+.stext{
+    text-shadow: black 4px 7px;
+    transition: text-shadow 2s ease-in;
+}
+
+.ptext{
+    text-shadow: black 0px 0px;
+    /* transition: text-shadow 1s ease-in-out; */
+}
+
+@keyframes showImage {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.5;
+    }
+
+}
+  /* @keyframes hideImage {
+    0% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0;
+    }
+  } */
+
+.simg{
+    animation: showImage 4s ease-in forwards; 
+}
+
+.pimg{
+   opacity: 0;
+   /* animation: hideImage 2s ease-in-out forwards; */
+}

@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  height: 95%;
+  width: 95%;
+  min-width: 170vh;
+}
+
+.content-div {
+  padding: 5px; 
+  overflow: auto; 
+  min-height: 500px; /* Пример минимальной высоты */
+
+  width: 100%;
+  height: auto;
+
+  display: flex;  flex-direction: column;
+
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: white;
+}

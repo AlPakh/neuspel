@@ -1,0 +1,209 @@
+.ris {
+    display: flex;
+    width: 200px;
+    height: 200px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+}
+
+
+
+.chainik{
+    width: 0px; 
+    height: 0px;
+    margin: 90px 76px;
+}
+
+
+.chainik_ru{
+    width: 30px;
+    height: 30px;
+    margin: 4px 35px;
+
+    background: radial-gradient(circle at center, white 50% 50%, red 50% 100%);
+    background-repeat: no-repeat;
+    position: fixed;
+    border-radius: 50%;
+}
+
+.chainik_kri{
+    width: 20px;
+    height: 36px;
+    rotate: 90deg;
+    margin: -15px 15px;
+    z-index: 5;
+
+    background-image: radial-gradient(circle at 0% 0%, white, red 1% 100%);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    position: fixed;
+    border-radius: 50%;
+}
+
+.chainik_kri_s{
+    width: 4px;
+    height: 4px;
+    margin: -10px 23px;
+
+    background-image: radial-gradient(circle at 0% 0%, white, red 1% 100%);
+    background-repeat: no-repeat;
+    position: fixed;
+    border-radius: 50%;
+}
+
+.chainik_osn{
+    width: 50px;
+    height: 40px;
+    z-index: 4;
+
+    background: radial-gradient(ellipse 50px 40px at 25% 33%, white, transparent 50%), rgb(249, 75, 75);
+    background-repeat: no-repeat;
+    position: fixed;
+    border-radius: 50%;
+}
+
+.chainik_nos_o{
+    width: 25px;
+    height: 35px;
+    margin: 6px -4px;
+    rotate: -60deg;
+    z-index: 3;
+
+    background-image: radial-gradient(circle at 0% 0%, white, red 1% 100%);
+    background-size: 50%;
+    background-repeat: no-repeat;
+
+    /* border: 1px solid black; */
+    position: fixed;
+    border-radius: 50%;
+}
+
+.chainik_nos_d{
+    width: 20px;
+    height: 25px;
+    margin: -8px 2px;
+    rotate: 180deg;
+    z-index: 2;
+
+    background-image: radial-gradient(circle at 0% 0%, white, red 1% 100%);
+    background-size: 50%;
+    background-repeat: no-repeat;
+
+    /* border: 1px solid black; */
+    position: fixed;
+    border-radius: 50%;
+}
+
+.stol_stol{
+    width: 100px;
+    height: 8px;
+
+    background: rgb(138, 111, 0);
+    margin: 130px 50px;
+    position: fixed;
+}
+
+.stol_nog{
+    width: 50px;
+    height: 20px;
+    rotate:90deg;
+
+    background: rgb(138, 111, 0);
+    margin: 150px 75px;
+    position: fixed;
+    border-radius: 50%;
+}
+
+.stol_osn {
+    width: 40;
+    height: 30;
+    margin-left: 84px;
+    margin-top: 175px;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent; 
+    border-bottom: 20px solid rgb(138, 111, 0); 
+    
+    /* align-self: center; */
+    position: fixed;
+}
+
+.taburet{
+    width: 0px; 
+    height: 0px;
+    margin: 45px 0;
+    position: fixed;
+}
+
+.taburet_sed{
+    width: 55px; 
+    height: 7px;
+    margin: 95px 20px;
+    
+    background: rgb(138, 111, 0);
+    position: fixed;
+}
+
+.taburet_sed_dirka{
+    width: 7px; 
+    height: 5px;
+    margin: 0px 15px;
+    
+    background: rgb(58, 47, 0);
+    border-radius: 50%;
+    position: fixed;
+}
+
+.taburet_spi{
+    width: 15px; 
+    height: 140px;
+    margin: 10px 10px;
+    rotate: 180deg;
+    
+    background: radial-gradient(ellipse 25px 130% at 130%, transparent, transparent 50%, rgb(138, 111, 0) 50% 75%, transparent 75% 100%);
+    /* border: 1px solid black; */
+    position: fixed;
+}
+
+.taburet_nog{
+    width: 7px; 
+    height: 50px;
+    margin: 100px 60px;
+    
+    background: rgb(138, 111, 0);
+    position: fixed;
+}
+
+.sec_taburet{
+    margin: 0 200px;
+    position: fixed;
+}
+
+.dim{
+    width: 30px;
+    height: 30px;
+    rotate: -120deg;
+    z-index: 1;
+
+    background-color: transparent;
+    border-radius: 50%;
+    position: relative;
+    animation: tudimsudim 8s linear infinite;
+}
+
+@keyframes tudimsudim {
+    0% {
+        transform: translateX(-3px) translateY(-5px) scale(0.3);
+        background-color: rgba(186, 186, 186, 0.622);
+        filter: blur(2px); 
+    }
+    25% {
+        transform:translateX(-6px) translateY(-60px) scale(1);
+        background-color: rgba(186, 186, 186, 0.371);
+        filter: blur(6px); 
+    }
+    50% {
+        transform: translateX(6px) translateY(-100px) scale(1.4);
+        background-color: rgba(186, 186, 186, 0);
+        filter: blur(10px); 
+    }
+}

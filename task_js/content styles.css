@@ -1,0 +1,17 @@
+.hidden{
+    display: none;
+}
+
+button {
+    font-size: 18px;
+    padding: 10px 10px;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+#result {
+    font-size: 48px;
+}

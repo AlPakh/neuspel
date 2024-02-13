@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang ="ru">
+<head >
+    <title>Сайт</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../styles.css" >
+    <link rel="stylesheet" type="text/css" href="loc_styles.css">
+</head>
+<body>
+    <div class="header"> 
+        <div class="header_main">        
+            <div class="logo">
+                <div class="overlap-group">
+                    <div class="d20_back"></div>
+                    <div class="d20_lines"></div>
+                    <div class="tsi12">12</div>
+                    <div class="dice_letter" id="letP">П</div>
+                    <div class="dice_letter" id="letV">В</div>
+                    <div class="dice_letter" id="letA">А</div>
+                </div>
+                      
+            </div>
+            <div class="title">Как ничего не успеть</div>
+        </div>
+
+        <div class="header_text">
+            <a class="text_menu" href="../main/index.html">Главная</a>
+            <div class="text_menu">Проекты
+                <div class="dropdown-content">
+                    <a href="../task_ris/index.html">Рисунок CSS</a>
+                    <a href="../task_svg/index.html">Рисунок SVG</a>
+                    <a href="../task_js/index.html">Основы JavaScript</a>
+                    <a href="../task_dom/index.html">DOM-тест</a>
+                    <a href="../task_dop/index.html">Пазл (доп.)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <div class="content-div">
+
+            <link rel="stylesheet" type="text/css" href="content styles.css">
+            <svg width="200" height="200" id="svgContent">
+                <a> <!-- Этот блок нужен для эффекта тряски -->
+                    <defs >
+                        <!-- Градиенты для текста -->
+                        <radialGradient  r="0.5" cy="0.5" cx="0.5" spreadMethod="pad" id="GradA">
+                            <stop  offset="0" stop-color="#b6b6ba"/>
+                            <stop  offset="1" stop-color="#83838c"/>
+                        </radialGradient>
+                        <radialGradient r="0.5" cy="0.5125" cx="0.503906" spreadMethod="pad" id="GradP">
+                            <stop offset="0" stop-color="#a19d9d"/>
+                            <stop offset="1" stop-color="#736b6b"/>
+                        </radialGradient>
+                        <radialGradient gradientTransform="translate(0,0.1239) scale(1,0.79)" r="0.5" cy="0.58" cx="0.5" spreadMethod="pad" id="GradWheel">
+                            <stop offset="0"/>
+                            <stop offset="0.1"/>
+                            <stop offset="0.4" stop-color="#cc3"/>
+                            <stop offset="0.6" stop-color="#cc3"/>
+                            <stop offset="0.7"/>
+                            <stop offset="1"/>
+                        </radialGradient>
+                    </defs>
+        
+                    <!-- При нажатии на содержимое появится картинка и не пропадёт -->
+                    <image x="0" y="0" width="200px" height="200px" xlink:href="image.webp" class="pimg">
+                        <animate id="showFumo" dur="4s" fill="freeze" attributeName="class" to="simg" begin="svgContent.click" repeatCount="1" restart="whenNotActive"/>
+                    </image>
+        
+                    <g font-family="'Marmelad', Gadget, sans-serif" font-size="24">
+                        <text transform="matrix(7.77728 0 0 6.83542 -570.682 -170.904)" y="46.296" x="82.165" fill="url(#GradP)" id="LetP" class="ptext">П
+                            <set attributeName="class" to="stext" begin="svgContent.click"/>
+                        </text>
+                        <text transform="matrix(7.82798 0 0 6.83477 -206.316 -989.975)" y="169.769" x="28.937" fill="url(#GradA)" id="LetA" class="ptext">А
+                            <set attributeName="class" to="stext" begin="svgContent.click"/>
+                        </text>
+        
+                        <!-- Путь по контуру букв -->
+                        <path id="motionPath" fill="none" stroke="none" d="
+                        M 75 45 L 17 175 L 42 175 L 54 146 L 102 146 L 115 175 L 143 175 L 108 85 
+                        L 108 48 L 160 48 L 160 148 L 188 148 L 188 36 L 188 36 L 80 36     Z"/>
+        
+                        <text transform="translate(-12.587 -47.24) scale(1)" y="37" x="0" fill="url(#GradWheel)" id="Wheel">
+                            <animateMotion dur="4s" begin="svgContent.mouseover;" repeatCount="1" restart="whenNotActive">
+                                <mpath href="#motionPath" />
+                            </animateMotion>֎
+                        </text>
+                    </g>
+                    
+                    <!-- После нажатия картинка начнёт трястись -->
+                    <path id="TOTALsvgShake" fill="none" stroke="none" d="M 0 0 L 5 5 L -5 0 L 5 -5 L 0 0 Z"/>
+        
+                    <animateMotion dur="0.5s" begin="showFumo.end" repeatCount="indefinite" restart="whenNotActive">
+                        <mpath href="#TOTALsvgShake"/>
+                    </animateMotion>
+        
+                </a>
+            </svg>
+
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+.container {
+    width: 90%;
+    margin: auto;
+    display: grid;
+    
+    align-items: flex-start;
+}
+
+.block{    /* Блок, содержащий вопросы-ответы горизонтально*/
+    display: flex;
+    padding: 5px;
+    align-items: center;
+}
+
+.question {    /* Элемент-вопрос */
+    padding: 10px;
+    margin: 5px;
+    margin-right: 10px;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+}
+
+.answers{    /* Блок, содержащий ответы */
+    display: flex;
+}
+
+.answ {    /* Элемент-ответ */
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+    /* Анимация выдвижения правильного ответа */
+@keyframes ansCorrect {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(10px); }
+    90% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+}
+
+.answ.correct {
+    background-color: lightgreen;
+    animation: ansCorrect 2s ease;
+}
+
+    /* Анимация потряхивания неправильных ответов */
+@keyframes ansWrong {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(10px); }
+    50% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
+}
+
+.answ.incorrect {
+    background-color: lightcoral;
+    animation: ansWrong 0.4s ease;
+}
+
+    /* Анимация исчезновения невыбранных вариантов ответа */
+@keyframes ansVanish {
+    0% { transform: translateY(0); opacity: 1; display: flex;}
+    100% { transform: translateY(50%); opacity: 0; display: none;}
+}
+
+.answ.vanish {
+    animation: ansVanish 2s ease forwards;
+}
+
+
+    /* Состояния кнопок до ответа */
+.answ.no:hover {
+    background-color: #e9e9e9;
+    transform: scale(1.05);
+}
+
+@keyframes ansActive {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(3px); }
+    50% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+    100% { transform: translateX(0); }
+}
+
+.answ.no:active {
+    animation: ansActive 0.2s ease infinite;
+}
+
+    /* Статистика по правильным ответам */
+#feedback, #questionsLeft, #results{
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+#quiz-container {
+    margin-top: 0;
+  }

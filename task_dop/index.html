@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang ="ru">
+<head >
+    <title>Сайт</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../styles.css" >
+    <link rel="stylesheet" type="text/css" href="loc_styles.css">
+</head>
+<body>
+    <div class="header"> 
+        <div class="header_main">        
+            <div class="logo">
+                <div class="overlap-group">
+                    <div class="d20_back"></div>
+                    <div class="d20_lines"></div>
+                    <div class="tsi12">12</div>
+                    <div class="dice_letter" id="letP">П</div>
+                    <div class="dice_letter" id="letV">В</div>
+                    <div class="dice_letter" id="letA">А</div>
+                </div>
+                      
+            </div>
+            <div class="title">Как ничего не успеть</div>
+        </div>
+
+        <div class="header_text">
+            <a class="text_menu" href="../main/index.html">Главная</a>
+            <div class="text_menu">Проекты
+                <div class="dropdown-content">
+                    <a href="../task_ris/index.html">Рисунок CSS</a>
+                    <a href="../task_svg/index.html">Рисунок SVG</a>
+                    <a href="../task_js/index.html">Основы JavaScript</a>
+                    <a href="../task_dom/index.html">DOM-тест</a>
+                    <a href="../task_dop/index.html">Пазл (доп.)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="okno" class="okno">
+        <div class="okno-content">
+          <img src="src/full.png" style="margin: 40px;">
+          <div style="display: grid;">
+                <p style="font-size: 20px;">Вот как должен выглядеть результат</p>
+                <p style="font-size: 14px;">Перетаскивание - зажатие кнопки мыши</p>
+                <p style="font-size: 14px;">Поворот - двойной клик</p>
+                <p style="font-size: 12px;">*для продолжения кликните в любую точку окна*</p>
+          </div>
+
+        </div>
+      </div>
+
+    <div class="container">
+        <div class="content-div" id="content-div">
+            
+                    <img src="src/5_feet.png" class="puzzle-piece" data-cposition="5" data-rotation="0">
+                    <img src="src/4_body.png" class="puzzle-piece" data-cposition="4" data-rotation="0">
+                    <img src="src/2_face.png" class="puzzle-piece" data-cposition="2" data-rotation="0">
+                    <img src="src/3_hands.png" class="puzzle-piece" data-cposition="3" data-rotation="0">
+                    <img src="src/1_ears.png" class="puzzle-piece" data-cposition="1" data-rotation="0">
+            
+            <script src="script.js"></script>
+        </div>
+    </div>
+</body>
+</html>

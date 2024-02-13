@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  height: 95%;
+  width: 95%;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.content-div {
+  padding: 5px;
+  overflow: auto;
+  box-sizing: border-box;
+  position: relative;
+  
+  min-height: 500px;
+
+  display: grid;
+
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: white;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang ="ru">
+<head >
+    <title>Сайт</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../styles.css" >
+    <link rel="stylesheet" type="text/css" href="loc_styles.css">
+</head>
+<body>
+    <div class="header"> 
+        <div class="header_main">        
+            <div class="logo">
+                <div class="overlap-group">
+                    <div class="d20_back"></div>
+                    <div class="d20_lines"></div>
+                    <div class="tsi12">12</div>
+                    <div class="dice_letter" id="letP">П</div>
+                    <div class="dice_letter" id="letV">В</div>
+                    <div class="dice_letter" id="letA">А</div>
+                </div>
+                      
+            </div>
+            <div class="title">Как ничего не успеть</div>
+        </div>
+
+        <div class="header_text">
+            <a class="text_menu" href="../main/index.html">Главная</a>
+            <div class="text_menu">Проекты
+                <div class="dropdown-content">
+                    <a href="../task_ris/index.html">Рисунок CSS</a>
+                    <a href="../task_svg/index.html">Рисунок SVG</a>
+                    <a href="../task_js/index.html">Основы JavaScript</a>
+                    <a href="../task_dom/index.html">DOM-тест</a>
+                    <a href="../task_dop/index.html">Пазл (доп.)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-div" id="content-div">
+            <link rel="stylesheet" type="text/css" href="content styles.css">
+
+            <div id="main-menu">
+                <div id="title">Название игры</div>
+                <button class="main-menu-button" id="start-game">Начать &nbsp; игру</button>
+                <button class="main-menu-button" id="instructions">Инструкция</button>
+            <button class="main-menu-button" id="scoreboard">Таблица &nbsp; результатов</button>
+            </div>
+            
+            <!-- Экран инструкции -->
+            <div id="instruction-screen">
+                <div id="instruction-nav">
+                    <button class="instruction-nav-btn" id="prev-instruction">&#8678;</button>
+                    <div id="instruction-container">
+                        <img class="instruction-menu-text" id="instruction-image" src="image1.jpg" alt="Инструкция 1">
+                        <div class="instruction-menu-text" id="instruction-text">Инструкция: Страница 1</div>
+                        <div class="instruction-menu-text" id="instruction-page-indicator">● ○ ○</div>
+                    </div>
+                    <button class="instruction-nav-btn" id="next-instruction">&#8680;</button>
+                <button id="back-to-menu-from-instructions">Назад</button>
+                </div>
+            </div>
+        
+            <!-- Экран таблицы результатов -->
+            <div id="scoreboard-screen" style="display:none;">
+                <!-- Содержимое таблицы результатов DODELAT' -->
+                <button id="back-to-menu-from-scoreboard">Назад</button>
+            </div>
+            <script src="script.js"></script>
+        </div>
+    </div>
+
+    <div class="warning" style="display: none; ">
+        Ваше окно браузера слишком маленькое. Пожалуйста, увеличьте его размер для лучшего просмотра.
+    </div>
+</body>
+</html>
