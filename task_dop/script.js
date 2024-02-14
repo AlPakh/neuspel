@@ -155,67 +155,98 @@ document.addEventListener('DOMContentLoaded', function() {
         piece.dataset.rotation = randomRotation;            //чтобы потом можно былосмотреть угол поворота при расчёте координат
         piece.style.transform = `rotate(${rotation}deg)`;
 
-        piece.addEventListener('dblclick', function() {
-            rotation = (rotation + 90) % 360;
-            piece.dataset.rotation = rotation;
-            piece.style.transform = `rotate(${rotation}deg)`;
-        });
+        if (window.matchMedia("(pointer: coarse)").matches) {   //touchscreen
+            piece.addEventListener('touchstart', function(e) {
+                e.preventDefault(); // Предотвратить стандартное поведение скроллинга
+        
+                // Рассчитываем начальное смещение, используя первое касание
+                var touch = e.touches[0];    // Получаем текущее касание
+                const startX = touch.clientX - parseFloat(piece.style.left);
+                const startY = touch.clientY - parseFloat(piece.style.top);
+        
+                function touchMoveHandler(e) {
+                    var touch = e.touches[0];
+                    const newX = touch.clientX - startX;
+                    const newY = touch.clientY - startY;
+        
+                    piece.style.left = `${newX}px`;
+                    piece.style.top = `${newY}px`;
+                }
+        
+                function touchEndHandler() {
+                    document.removeEventListener('touchmove', touchMoveHandler);
+                    document.removeEventListener('touchend', touchEndHandler);
+                }
+        
+                document.addEventListener('touchmove', touchMoveHandler);
+                document.addEventListener('touchend', touchEndHandler);
+            });
 
-        var evDown = 'mousedown';
-        var evUp = 'mouseup';
-        var evMove = 'mousemove';
+            function detectDoubleTapClosure() {
+                let lastTap = 0;
+                let timeout;
+                return function detectDoubleTap(event) {
+                  const curTime = new Date().getTime();
+                  const tapLen = curTime - lastTap;
+                  if (tapLen < 400 && tapLen > 0) {
+                    event.preventDefault();
+                    rotation = (rotation + 90) % 360;
+                    piece.dataset.rotation = rotation;
+                    piece.style.transform = `rotate(${rotation}deg)`;
+                  } 
+                  else {
+                    timeout = setTimeout(() => {
+                      clearTimeout(timeout);
+                    }, 400);
+                  }
+                  lastTap = curTime;
+                };
+              }
 
-        if(window.matchMedia("(pointer: coarse)").matches) {            // touchscreen
-            evDown = 'touchstart';
-            evUp = 'touchend';
-            evMove = 'touchmove';
-            smClck = e.touches[0];
+            //добавления события двойного клика для поворота
+            document.addEventListener('dbltouch', detectDoubleTapClosure());
         }
-  
-        //добавления события события удержания для перетаскивания
-        piece.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-
-            if(window.matchMedia("(pointer: coarse)").matches) {            // touchscreen
-                var smClck = e.touches[0];
-            }
-            else{
-                var smClck = e;
-            }
-
-            const startX = smClck.clientX - parseFloat(piece.style.left); //учитываем располож-е относительно родителя
-            const startY = smClck.clientY - parseFloat(piece.style.top);
-  
-            function mouseMoveHandler(e) {
-                if(window.matchMedia("(pointer: coarse)").matches) {            // touchscreen
-                    smClck = e.touches[0];
-                }
-                else{
-                    var smClck = e;
-                }
-                const newX = smClck.clientX - startX;
-                const newY = smClck.clientY - startY;
+        else{
+            //добавления события двойного клика для поворота
+            piece.addEventListener('dblclick', function() {
+                rotation = (rotation + 90) % 360;
+                piece.dataset.rotation = rotation;
+                piece.style.transform = `rotate(${rotation}deg)`;
+            });
     
-                piece.style.left = `${newX}px`;
-                piece.style.top = `${newY}px`;
-            }
-  
-            function mouseUpHandler() {
-                document.removeEventListener('mousemove', mouseMoveHandler);
-                document.removeEventListener('mouseup', mouseUpHandler);
+            //добавления события удержания для перетаскивания
+            piece.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                const startX = e.clientX - parseFloat(piece.style.left); //учитываем располож-е относительно родителя
+                const startY = e.clientY - parseFloat(piece.style.top);
+    
+                function mouseMoveHandler(e) {
+                    const newX = e.clientX - startX;
+                    const newY = e.clientY - startY;
+        
+                    piece.style.left = `${newX}px`;
+                    piece.style.top = `${newY}px`;
+                }
+    
+                function mouseUpHandler() {
+                    document.removeEventListener('mousemove', mouseMoveHandler);
+                    document.removeEventListener('mouseup', mouseUpHandler);
 
-                endGame(); //проверка, все ли фигуры на месте
-            }
-  
-            document.addEventListener('mousemove', mouseMoveHandler);
-            document.addEventListener('mouseup', mouseUpHandler);
-        });
+                    endGame(); //проверка, все ли фигуры на месте
+                }
+    
+                document.addEventListener('mousemove', mouseMoveHandler);
+                document.addEventListener('mouseup', mouseUpHandler);
+            });
+        }
     });
 
+    //Удаление окна инструкции по нажатию на облать окна
     document.querySelector('.okno').addEventListener('click', function() {
         document.getElementById('okno').style.display = 'none';
     });
 
+    //Показать окно с инструкцией
     document.getElementById('okno').style.display = 'block';
 });
 
