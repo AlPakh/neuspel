@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Массив вопросов и ответов
+    if(screen.orientation == "0") alert("Пожалуйста, поверните экран");
+
     const masQuestions = [
         {
             arrQuestions: "Если человека назвали мордофиля, то это…",
