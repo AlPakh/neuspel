@@ -21,10 +21,12 @@
     justify-content: center;
     align-items: center;
     width: 40%;
+    flex-shrink: 0;
 }
 
 .answers{    /* Блок, содержащий ответы */
     display: flex;
+    flex-shrink: 2;
 }
 
 .answ {    /* Элемент-ответ */
@@ -38,6 +40,7 @@
     background-color: #f9f9f9;
     transition: background-color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
+    flex-shrink: 2;
 }
 
     /* Анимация выдвижения правильного ответа */

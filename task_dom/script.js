@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Массив вопросов и ответов
-    if(screen.orientation == "0") alert("Пожалуйста, поверните экран");
+    if(screen.orientation.type == "portrait-primary" || screen.orientation.type == "portrait-secondary" ) alert("Пожалуйста, поверните экран");
 
     const masQuestions = [
         {

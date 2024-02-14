@@ -160,16 +160,41 @@ document.addEventListener('DOMContentLoaded', function() {
             piece.dataset.rotation = rotation;
             piece.style.transform = `rotate(${rotation}deg)`;
         });
+
+        var evDown = 'mousedown';
+        var evUp = 'mouseup';
+        var evMove = 'mousemove';
+
+        if(window.matchMedia("(pointer: coarse)").matches) {            // touchscreen
+            evDown = 'touchstart';
+            evUp = 'touchend';
+            evMove = 'touchmove';
+            smClck = e.touches[0];
+        }
   
         //добавления события события удержания для перетаскивания
         piece.addEventListener('mousedown', function(e) {
             e.preventDefault();
-            const startX = e.clientX - parseFloat(piece.style.left); //учитываем располож-е относительно родителя
-            const startY = e.clientY - parseFloat(piece.style.top);
+
+            if(window.matchMedia("(pointer: coarse)").matches) {            // touchscreen
+                var smClck = e.touches[0];
+            }
+            else{
+                var smClck = e;
+            }
+
+            const startX = smClck.clientX - parseFloat(piece.style.left); //учитываем располож-е относительно родителя
+            const startY = smClck.clientY - parseFloat(piece.style.top);
   
             function mouseMoveHandler(e) {
-                const newX = e.clientX - startX;
-                const newY = e.clientY - startY;
+                if(window.matchMedia("(pointer: coarse)").matches) {            // touchscreen
+                    smClck = e.touches[0];
+                }
+                else{
+                    var smClck = e;
+                }
+                const newX = smClck.clientX - startX;
+                const newY = smClck.clientY - startY;
     
                 piece.style.left = `${newX}px`;
                 piece.style.top = `${newY}px`;
