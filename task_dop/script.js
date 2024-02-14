@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
             //делаем анимацию
             document.querySelector('.puzzle-piece[data-cposition="2"]').src = "src/2_face.gif";
             document.querySelector('.puzzle-piece[data-cposition="3"]').src = "src/3_hands.gif";
-        };
+        }
     }
 
     pieces.forEach(piece => {
@@ -176,6 +176,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 function touchEndHandler() {
                     document.removeEventListener('touchmove', touchMoveHandler);
                     document.removeEventListener('touchend', touchEndHandler);
+
+                    endGame(); //проверка, все ли фигуры на месте
                 }
         
                 document.addEventListener('touchmove', touchMoveHandler);
@@ -204,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
               }
 
             //добавления события двойного клика для поворота
-            document.addEventListener('dbltouch', detectDoubleTapClosure());
+            piece.addEventListener('touchend', detectDoubleTapClosure());
         }
         else{
             //добавления события двойного клика для поворота
@@ -247,6 +249,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     //Показать окно с инструкцией
-    document.getElementById('okno').style.display = 'block';
+    document.getElementById('okno').style.display = 'flex';
 });
 
