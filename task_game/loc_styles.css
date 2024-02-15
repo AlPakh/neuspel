@@ -50,7 +50,8 @@ html {
 
 @font-face {
   font-family: 'Kroftsmann';
-  src: url('Kroftsmann.ttf') format('truetype');
+  src: url('Kroftsmann.ttf') format('truetype'),
+  url('https://fonts.cdnfonts.com/css/kroftsmann') format('truetype'),;
 }
 
 @font-face {
