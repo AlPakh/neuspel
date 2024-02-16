@@ -132,14 +132,14 @@
   
   .cutscene-text {
     margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 4vw;
+    margin-right: 4vw;
     background: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон для текста */
     color: #fff;
     padding: 20px;
     cursor: pointer;
-    width: 85vw;
-    font-size: calc(24px + 2.2vmin);
+    width: 95vw;
+    font-size: calc(24px + 1vmin);
     font-family: 'Kroftsmann';
 
   }
