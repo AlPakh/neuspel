@@ -51,10 +51,11 @@ html {
 @font-face {
   font-family: 'Kroftsmann', sans-serif;
   src: url('Kroftsmann.ttf') format('truetype'),
-  url('https://fonts.cdnfonts.com/css/kroftsmann') format('truetype'),;
+  url(fonts.cdnfonts.com/css/kroftsmann');
 }
 
 @font-face {
   font-family: 'Shket';
-  src: url('Shket.otf') format('opentype');
+  src: url('Shket.otf') format('opentype'),
+  url('fonts.cdnfonts.com/css/shket');
 }
