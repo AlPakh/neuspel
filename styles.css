@@ -146,13 +146,13 @@ body{
 
 @font-face {
   font-family: 'Kyiv Type';
-  src: url('fonts/KyivTypeTitling-VarGX.ttf') format('truetype');
+  src: url('fonts/KyivTypeTitling-VarGX.ttf') format('truetype'),    url('fonts.cdnfonts.com/css/shket');
 }
 
 @font-face {
   font-family: 'Irish Grover';
   src: url('fonts/IrishGrover-Regular.ttf') format('truetype'),
-    url('https://fonts.googleapis.com/css?family=Irish+Grover&display=swap') format('truetype');
+    url('fonts.googleapis.com/css?family=Irish+Grover&display=swap');
 }
 
 .dropdown-content {
