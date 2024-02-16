@@ -46,7 +46,7 @@
                 <button class="main-menu-button" id="start-game">Начать &nbsp; игру</button>
                 <button class="main-menu-button" id="instructions">Инструкция</button>
                 <button class="main-menu-button" id="scoreboard">Таблица &nbsp; результатов</button>
-                <script src="mainMenu.js"></script>
+                <script src="scripts/mainMenu.js"></script>
             </div>
             
             <!-- Экран инструкции -->
@@ -61,7 +61,7 @@
                     <button class="instruction-nav-btn" id="next-instruction">&#8680;</button>
                     <button id="back-to-menu-from-instructions">Назад</button>
                 </div>
-                <script src="instructionMenu.js"></script>
+                <script src="scripts/instructionMenu.js"></script>
             </div>
         
             <!-- Экран таблицы результатов -->
@@ -81,6 +81,7 @@
             <div id="cutscene-screen" style="display:none;">
                 <img id="cutscene-image" src=".jpg" alt="Катсцена" />
                 <div id="cutscene-text" class="cutscene-text"></div>
+                <script src="scripts/cutscene.js"></script>
             </div>
 
             <!-- Экран сообщения о переходе на уровень-->
@@ -95,7 +96,7 @@
     <div class="warning" style="display: none; ">
         Ваше окно браузера слишком маленькое. Пожалуйста, увеличьте его размер для лучшего просмотра.
     </div>
+    <script src="scripts/onResize.js"></script>    
 
-    <script src="onResize.js"></script>    
 </body>
 </html>
