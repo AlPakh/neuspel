@@ -56,3 +56,21 @@
   align-items: center;
   justify-content: center;
 }
+
+
+.warning {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  color: #FFF;
+  font-family: 'Kyiv Type';
+  background: #0D0D0D;
+  width: 100vw;
+  height: 100vh;
+}
