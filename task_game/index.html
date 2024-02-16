@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../styles.css" >
     <link rel="stylesheet" type="text/css" href="loc_styles.css">
+    
 </head>
 <body>
     <div class="header"> 
@@ -40,9 +41,11 @@
     <div class="container">
         <div class="content-div" id="content-div">
             <link rel="stylesheet" type="text/css" href="content styles.css">
+            <link rel="stylesheet" type="text/css" href="styles/menu styles.css">
+            <link rel="stylesheet" type="text/css" href="styles/cutscene styles.css">
 
             <div id="main-menu">
-                <div id="title">Название игры</div>
+                <div id="title">Буревестник</div>
                 <button class="main-menu-button" id="start-game">Начать &nbsp; игру</button>
                 <button class="main-menu-button" id="instructions">Инструкция</button>
                 <button class="main-menu-button" id="scoreboard">Таблица &nbsp; результатов</button>
@@ -72,14 +75,13 @@
 
             <!-- Выбор уровня -->
             <div id="continue-screen" style="display:none;">
-                <div>Вы достигли 3-го уровня. Выберите опцию:</div>
-                <button id="start-from-beginning">Начать с начала</button>
-                <button class="continue-froml-level-3">Продолжить с 3-го уровня</button>
+                <button class="main-menu-button" id="ng-button">Начать с начала</button>
+                <button class="main-menu-button" id="continue-button">Продолжить с 3-го уровня</button>
             </div>
 
             <!-- Катсцена в начале игры -->
             <div id="cutscene-screen" style="display:none;">
-                <img id="cutscene-image" src=".jpg" alt="Катсцена" />
+                <img id="cutscene-image" src="img/ship.png" alt="Катсцена" />
                 <div id="cutscene-text" class="cutscene-text"></div>
                 <script src="scripts/cutscene.js"></script>
             </div>
@@ -87,6 +89,23 @@
             <!-- Экран сообщения о переходе на уровень-->
             <div id="transition-screen" style="display:none;">
                 <div id="transition-message">Переход на уровень...</div>
+            </div>
+
+            <div id="game-screen" style="display:none;">
+                <!-- Контейнер для динамически генерирующихся объектов -->
+                <div id="game-objects-container">
+                    <!-- Контент будет динамически генерироваться в JavaScript -->
+                </div>
+
+                <!-- Контейнер для элементов индикаторов -->
+                <div id="indicators-container">
+                    <div class="indicator" id="indicator-1"></div>
+                    <div class="indicator" id="indicator-2"></div>
+                    <div class="indicator" id="indicator-3"></div>
+                </div>
+                
+                <!-- Текстовое поле для таймера обратного отсчёта -->
+                <div id="countdown-timer">00:00</div>
             </div>
 
             <script src="script.js"></script>

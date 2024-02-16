@@ -3,9 +3,9 @@ let currentCharIndex = 0;
 let timer;
 
 const cutsceneTexts = [
-    "В начале было слово.",
-    "И слово было:...",
-    "... \"опоздал\".",
+    "Вы сидите в кабине космического корабля",
+    "Системы безопастности предупреждают вас о приближающихся астероидах",
+    "Ваша задача нажимать на индикаторы через указанное на них время",
 ];
 
 function showCutsceneText() {
@@ -13,7 +13,7 @@ function showCutsceneText() {
         let text = cutsceneTexts[currentTextIndex];
         if (currentCharIndex < text.length) {
             document.getElementById('cutscene-text').textContent += text[currentCharIndex++];
-            timer = setTimeout(showCutsceneText, 100); // Скорость вывода текста здесь
+            timer = setTimeout(showCutsceneText, 60); // Скорость вывода текста здесь
         }
     }
 }
@@ -22,7 +22,6 @@ function nextCutsceneText() {
     clearTimeout(timer); // Очищаем текущий таймер, если он есть
     if (currentCharIndex < cutsceneTexts[currentTextIndex].length) // Если текст ещё не закончил выводиться, выводим его полностью
     {
-
         document.getElementById('cutscene-text').textContent = cutsceneTexts[currentTextIndex];
         currentCharIndex = cutsceneTexts[currentTextIndex].length;
     } 
@@ -37,9 +36,10 @@ function nextCutsceneText() {
     {
         document.getElementById('cutscene-screen').style.display = 'none';
         currentTextIndex = 0;
+        currentCharIndex = 0;
         // Отобразить экран перехода к первому уровню
-        // document.getElementById('level-transition-screen').style.display = 'block';
         showTransitionScreen('1');
+        document.getElementById('cutscene-text').textContent = ""
     }
 }
 

@@ -40,8 +40,6 @@ document.getElementById("next-instruction").addEventListener("click", function()
     }
 });
 
-updateInstructionScreen();
-
 document.getElementById("back-to-menu-from-instructions").addEventListener("click", function() {
     document.getElementById("instruction-screen").style.display = "none";
     document.getElementById("main-menu").style.display = "flex";

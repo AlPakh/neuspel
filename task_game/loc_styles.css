@@ -55,6 +55,6 @@ html {
 }
 
 @font-face {
-  font-family: 'Thorn Valley';
-  src: url('ThornValley.ttf') format('truetype');
+  font-family: 'Shket';
+  src: url('Shket.otf') format('opentype');
 }
