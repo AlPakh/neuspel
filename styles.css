@@ -152,7 +152,7 @@ body{
 @font-face {
   font-family: 'Irish Grover';
   src: url('fonts/IrishGrover-Regular.ttf') format('truetype'),
-    url('https://fonts.googleapis.com/css?family=Irish+Grover&display=swap') format('truetype');
+    url('fonts.googleapis.com/css?family=Irish+Grover&display=swap');
 }
 
 .dropdown-content {
