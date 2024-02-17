@@ -47,7 +47,11 @@
     }
     
     .instruction-nav-btn {    /* Кнопки со стрелками */
-      background-color: red;
+      /*background-color: red;*/
+      background-color: transparent;
+      border-style: solid;
+      border-width: 1px;
+      border-color: white;
       color: white;
       padding: 10px;
       margin: 10px;
@@ -77,14 +81,14 @@
     }
     
     #instruction-image {    /* Изображение */
-      border: 2px solid blue;
+      /*border: 2px solid blue;*/
       min-width: 300px;
       min-height: 200px;
       width: 100%;
     }
     
     #instruction-page-indicator {    /* Индикатор страниц */
-      border: 2px solid orange;
+      /*border: 2px solid orange;*/
     }
   
     #back-to-menu-from-instructions, #back-to-menu-from-scoreboard{

@@ -35,10 +35,6 @@ function showTransitionScreen(level) {
     }, 3000);
 }
 
-
-
-
-
 // Настройки игры для каждого уровня
 const levelSettings = {
     1: { duration: 40, indicatorTimeout: { min: 3, max: 4 }, clickTolerance: 1, timeMod: 1 },
