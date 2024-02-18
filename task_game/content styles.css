@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: space-around; /* Распределение пространства вокруг дочерних элементов */
   height: 100%;
-  width: 100%;
+  width: 100vw;
   padding: 20px;
   box-sizing: border-box; /* Убедитесь, что padding не изменяет размеры */
 }
@@ -53,4 +53,17 @@
 
 .active{
   color: red;
+}
+
+.score-text{
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 20px;
+  color: white;
+  font-size: calc(24px + 1vmax);
+  font-family: 'Shket';
+  justify-content: right;
+
+  background-color: black;
 }

@@ -3,19 +3,6 @@ document.getElementById("back-to-menu-from-scoreboard").addEventListener("click"
     document.getElementById("main-menu").style.display = "flex";
 });
 
-// function checkLevelProgress() {
-//     const levelReached = localStorage.getItem('levelReached');
-//     if (levelReached && levelReached === '3') {
-//         // Показать опции для игрока
-//         document.getElementById("start-game").textContent = "Продолжить с уровня 3";
-//         document.getElementById("start-from-beginning").style.display = "block";
-//     } else {
-//         // Стандартный текст кнопки и скрытие опции начала сначала
-//         document.getElementById("start-game").textContent = "Начать игру";
-//         document.getElementById("start-from-beginning").style.display = "none";
-//     }
-// }
-
 // Функция для показа страницы перехода и автоматического перехода на уровень
 function showTransitionScreen(level) {
     // Обновить localStorage, если текущий уровень больше сохранённого
@@ -38,6 +25,7 @@ function showTransitionScreen(level) {
 // Инициализация игры (можно вызвать при полной загрузке страницы)
 function initGame() {
     const levelReached = localStorage.getItem('levelReached');
+    const maxGameScore = localStorage.getItem('maxGameScore');
     // ... Остальной код инициализации игры
     initIndicators(); // Инициализация индикаторов
 }
@@ -53,14 +41,16 @@ const levelSettings = {
 };
 
 let currentLevel;
-let gameTimer; //Таймер, раз в секунду обновляющий счётчик
-let indicatorTimer; //Цифра, выводимая на индикаторе
+let gameUPTimer; //Таймер, раз в секунду обновляющий счётчик
+let gameDOWNTimer; //Таймер, раз в секунду обновляющий счётчик
 let timeLeft; //Счётчик на таймере
 let timerIds = []; //Идентификаторы всех таймеров
+let gameScore = 0;
     
-    let activationTimerId; // Идентификатор для таймера активации индикатора
-    let clickWindowTimerId; // Идентификатор для таймера "окна для клика"
-    let activeIndicators = document.querySelectorAll('.indicator');
+let activationTimerId; // Идентификатор для таймера активации индикатора
+let clickWindowTimerId; // Идентификатор для таймера "окна для клика"
+let activeIndicators = document.querySelectorAll('.indicator');
+const maxGameScore = localStorage.getItem('maxGameScore');
 
 // Функция для начала уровня
 function startLevel(level) {
@@ -69,9 +59,9 @@ function startLevel(level) {
     document.getElementById("countdown-timer").textContent = formatTime(timeLeft);
     switch(levelSettings[level].timeMod){
         case "-1":
-            gameTimer = setInterval(updateCountupTimer, 1000); // Таймер уровня
+            gameUPTimer = setInterval(updateCountupTimer, 1000); // Таймер уровня
         default:
-            gameTimer = setInterval(updateCountdownTimer, 1000); // Таймер уровня
+            gameDOWNTimer = setInterval(updateCountdownTimer, 1000); // Таймер уровня
     }
     activateIndicator(); // Активируем первый индикатор
     console.log("Начинаем уровень " + level);
@@ -90,15 +80,15 @@ function updateCountdownTimer() {
     } 
     else 
     {
-        clearInterval(gameTimer);
+        clearInterval(gameDOWNTimer);
         endLevel(); // Завершить уровень
     }
 }
 
 // Функция обновления таймера для третьего уровня
 function updateCountupTimer() {
-        timeLeft = Math.floor(Math.random() * 3600) + 2;
-        document.getElementById("countdown-timer").textContent = formatTime(timeLeft);
+    timeLeft = Math.floor(Math.random() * 3600) + 2;
+    document.getElementById("countdown-timer").textContent = formatTime(timeLeft);
 }
 
 // Форматирование времени для отображения
@@ -133,9 +123,11 @@ function activateIndicator() {
                     failLevel(2);
                 }
             }, (timeoutSeconds + levelSettings[currentLevel].clickTolerance) * 1000);
+            timerIds.push(clickWindowTimerId);
+            console.log(clickWindowTimerId);
         }, timeoutSeconds * 1000);
-        timerIds.push(clickWindowTimerId);
         timerIds.push(activationTimerId);
+        console.log(activationTimerId)
     }
 
 }
@@ -158,6 +150,8 @@ function indicatorClicked(event) {
         // Успешный клик
         event.target.classList.remove('clickable', 'active');
         event.target.textContent = '';
+        gameScore += Math.floor(((1/parseInt(levelSettings[currentLevel].clickTolerance, 10)) / Math.abs(elapsed-timeOnIndicator))*100);
+        document.getElementById("score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
         activateIndicator(); // Активируем следующий индикатор
     } else {
         // Нажатие вне временного окна
@@ -185,13 +179,40 @@ function getRandomTimeoutSeconds(level) {
 // Завершение уровня
 function endLevel() {
     alert('Уровень ' + currentLevel + ' пройден!');
-    document.getElementById("game-screen").style.display = "none";
-    currentLevel++;
-    if (currentLevel <= Object.keys(levelSettings).length) {
-        showTransitionScreen(currentLevel); // Показываем экран перехода на следующий уровень
-    } else {
-        showVictoryScreen(); // Показываем экран победы, если это был последний уровень
-    }
+    timeLeft = 0;
+
+    clearInterval(gameDOWNTimer);
+    clearTimeout(gameDOWNTimer);
+
+    clearInterval(gameUPTimer);
+    clearTimeout(gameUPTimer);
+    
+    timerIds.forEach(timerId => {
+        clearTimeout(timerId);
+        clearInterval(timerId);
+    });
+    timerIds = [];
+
+    const indicatorsContainer = document.querySelectorAll('.indicator');
+    indicatorsContainer.forEach(indicator => {
+        if(indicator.classList.length > 0)
+        {
+            indicator.classList.remove('active', 'clickable');
+            indicator.textContent = '';
+        }
+        indicator.dataset.remove;
+    });
+
+    setTimeout(() => {
+        document.getElementById("game-screen").style.display = "none";
+        currentLevel++;
+        if (currentLevel <= Object.keys(levelSettings).length) {
+            showTransitionScreen(currentLevel); // Показываем экран перехода на следующий уровень
+        } else {
+            showVictoryScreen(); // Показываем экран победы, если это был последний уровень
+        }
+    }, 2000);
+
 }
 
 // Если игрок не успевает кликнуть на индикатор
@@ -211,9 +232,18 @@ function showVictoryScreen() {
 function resetGame() {
     // Скрыть игровой экран и очистить все таймеры и данные
     
-    clearInterval(gameTimer);
+    timeLeft = 0;
+
+    clearInterval(gameDOWNTimer);
+    clearTimeout(gameDOWNTimer);
+
+    clearInterval(gameUPTimer);
+    clearTimeout(gameUPTimer);
     
-    timerIds.forEach(timerId => clearTimeout(timerId));
+    timerIds.forEach(timerId => {
+        clearTimeout(timerId);
+        clearInterval(timerId);
+    });
     timerIds = [];
 
     const indicatorsContainer = document.querySelectorAll('.indicator');
@@ -221,14 +251,17 @@ function resetGame() {
         if(indicator.classList.length > 0)
         {
             indicator.classList.remove('active', 'clickable');
+            indicator.textContent = '';
         }
         indicator.dataset.remove;
     });
+
+    if(!maxGameScore || maxGameScore < gameScore){
+        localStorage.setItem('maxGameScore', gameScore.toString());
+    }
 
     setTimeout(() => {
         document.getElementById("game-screen").style.display = "none";
         document.getElementById("main-menu").style.display = "flex"; 
     }, 2000);
-
-
 }
