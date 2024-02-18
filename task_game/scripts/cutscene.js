@@ -9,6 +9,7 @@ const cutsceneTexts = [
 ];
 
 function showCutsceneText() {
+    document.getElementById("click-continue-text").textContent = ". . .";
     if (currentTextIndex < cutsceneTexts.length) {
         let text = cutsceneTexts[currentTextIndex];
         if (currentCharIndex < text.length) {

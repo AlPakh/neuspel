@@ -35,17 +35,32 @@ function showTransitionScreen(level) {
     }, 3000);
 }
 
+// Инициализация игры (можно вызвать при полной загрузке страницы)
+function initGame() {
+    const levelReached = localStorage.getItem('levelReached');
+    // ... Остальной код инициализации игры
+    initIndicators(); // Инициализация индикаторов
+}
+
+// Вызов функции инициализации
+window.onload = initGame;
+
 // Настройки игры для каждого уровня
 const levelSettings = {
-    1: { duration: 40, indicatorTimeout: { min: 3, max: 5 }, clickTolerance: 1, timeMod: "1" },
-    2: { duration: 30, indicatorTimeout: { min: 3, max: 5 }, clickTolerance: 0.7, timeMod: "1" },
+    1: { duration: 30, indicatorTimeout: { min: 3, max: 5 }, clickTolerance: 1, timeMod: "1" },
+    2: { duration: 20, indicatorTimeout: { min: 3, max: 5 }, clickTolerance: 0.5, timeMod: "1" },
     3: { duration: 15, indicatorTimeout: { min: 2, max: 5 }, clickTolerance: 1, timeMod: "-1"  }
 };
 
 let currentLevel;
-let gameTimer;
-let indicatorTimer;
-let timeLeft;
+let gameTimer; //Таймер, раз в секунду обновляющий счётчик
+let indicatorTimer; //Цифра, выводимая на индикаторе
+let timeLeft; //Счётчик на таймере
+let timerIds = []; //Идентификаторы всех таймеров
+    
+    let activationTimerId; // Идентификатор для таймера активации индикатора
+    let clickWindowTimerId; // Идентификатор для таймера "окна для клика"
+    let activeIndicators = document.querySelectorAll('.indicator');
 
 // Функция для начала уровня
 function startLevel(level) {
@@ -93,9 +108,6 @@ function formatTime(seconds) {
     return minutes.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0');
 }
 
-let activationTimerId; // Идентификатор для таймера активации индикатора
-let clickWindowTimerId; // Идентификатор для таймера "окна для клика"
-
 // Функция для активации одного случайного индикатора
 function activateIndicator() {
     const indicators = document.querySelectorAll('.indicator');
@@ -104,22 +116,28 @@ function activateIndicator() {
     
     const timeoutSeconds = getRandomTimeoutSeconds(currentLevel);
     // Устанавливаем время, через которое индикатор станет активным
-    activationTimerId = setTimeout(() => {
-        selectedIndicator.textContent = timeoutSeconds; // Отображаем время на индикаторе
-        selectedIndicator.dataset.requiredTime = timeoutSeconds; // Записываем в свойства
-        selectedIndicator.classList.add('clickable', 'active'); // Сделать индикатор кликабельным и активным
-        selectedIndicator.dataset.activationTime = Date.now(); // Запоминаем момент активации
+    if(!selectedIndicator.classList.contains('clickable'))
+    {
+        activationTimerId = setTimeout(() => {
+            selectedIndicator.textContent = timeoutSeconds; // Отображаем время на индикаторе
+            selectedIndicator.dataset.requiredTime = timeoutSeconds; // Записываем в свойства
+            selectedIndicator.classList.add('clickable', 'active'); // Сделать индикатор кликабельным и активным
+            selectedIndicator.dataset.activationTime = Date.now(); // Запоминаем момент активации
+            if(currentLevel == 3) {activateIndicator();}
 
+            // Устанавливаем таймер для "окна для клика"
+            clickWindowTimerId = setTimeout(() => {
+                // Если индикатор все еще кликабелен после окна для клика, игрок проиграл
+                if (selectedIndicator.classList.contains('clickable')) {
+                    selectedIndicator.classList.remove('clickable', 'active');
+                    failLevel(2);
+                }
+            }, (timeoutSeconds + levelSettings[currentLevel].clickTolerance) * 1000);
+        }, timeoutSeconds * 1000);
+        timerIds.push(clickWindowTimerId);
+        timerIds.push(activationTimerId);
+    }
 
-        // Устанавливаем таймер для "окна для клика"
-        clickWindowTimerId = setTimeout(() => {
-            // Если индикатор все еще кликабелен после окна для клика, игрок проиграл
-            if (selectedIndicator.classList.contains('clickable')) {
-                selectedIndicator.classList.remove('clickable', 'active');
-                failLevel(2);
-            }
-        }, (timeoutSeconds + levelSettings[currentLevel].clickTolerance) * 1000);
-    }, timeoutSeconds * 1000);
 }
 
 // Обработка клика по индикатору
@@ -192,13 +210,13 @@ function showVictoryScreen() {
 // Функция для сброса игры или подготовки к новой игре
 function resetGame() {
     // Скрыть игровой экран и очистить все таймеры и данные
-    document.getElementById("game-screen").style.display = "none";
-    const indicatorsContainer = document.querySelectorAll('.indicator');
     
     clearInterval(gameTimer);
-    clearTimeout(activationTimerId);
-    clearTimeout(clickWindowTimerId);
+    
+    timerIds.forEach(timerId => clearTimeout(timerId));
+    timerIds = [];
 
+    const indicatorsContainer = document.querySelectorAll('.indicator');
     indicatorsContainer.forEach(indicator => {
         if(indicator.classList.length > 0)
         {
@@ -207,15 +225,10 @@ function resetGame() {
         indicator.dataset.remove;
     });
 
-    document.getElementById("main-menu").style.display = "flex";
-}
+    setTimeout(() => {
+        document.getElementById("game-screen").style.display = "none";
+        document.getElementById("main-menu").style.display = "flex"; 
+    }, 2000);
 
-// Инициализация игры (можно вызвать при полной загрузке страницы)
-function initGame() {
-    const levelReached = localStorage.getItem('levelReached');
-    // ... Остальной код инициализации игры
-    initIndicators(); // Инициализация индикаторов
-}
 
-// Вызов функции инициализации
-window.onload = initGame;
+}
