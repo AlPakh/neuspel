@@ -1,0 +1,24 @@
+/********************************************
+Сгенерированно в Quick Site Upgrade
+https://quick-site-upgrade.com/tools/web-font-optimizer
+********************************************/
+@font-face {
+    font-family: 'shket';
+    font-style: normal;
+    font-weight: 400;
+    src: url('shket-russian.woff2') format('woff2'),
+        url('shket-russian.woff') format('woff'),
+        url('shket-russian.ttf') format('truetype');
+    unicode-range: U+21-23,U+25-40,U+5B-5F,U+7B-7E,U+AB,U+BB,U+401,U+410-44F,U+451,U+2013,U+2014,U+2018,U+2019,U+201C-201E,U+2026,U+20BD
+;
+}
+@font-face {
+    font-family: 'shket';
+    font-style: normal;
+    font-weight: 400;
+    src: url('shket-english.woff2') format('woff2'),
+        url('shket-english.woff') format('woff'),
+        url('shket-english.ttf') format('truetype');
+    unicode-range: U+21-5F,U+61-7E,U+2013,U+2014,U+2018,U+2019,U+201C,U+201D,U+2026
+;
+}

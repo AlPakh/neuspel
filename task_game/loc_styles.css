@@ -49,13 +49,36 @@ html {
 }
 
 @font-face {
-  font-family: 'Kroftsmann', sans-serif;
-  src: url('Kroftsmann.ttf'),
-  url('fonts.cdnfonts.com/css/kroftsmann');
+  font-family: 'Kroftsmann';
+  font-style: normal;
+  font-weight: 400;
+  src: url('kroftsmann-russian.woff2') format('woff2'),
+      url('kroftsmann-russian.woff') format('woff'),
+      url('kroftsmann-russian.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Kroftsmann';
+  font-style: normal;
+  font-weight: 400;
+  src: url('kroftsmann-english.woff2') format('woff2'),
+      url('kroftsmann-english.woff') format('woff'),
+      url('kroftsmann-english.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Shket';
-  src: url('Shket.otf') format('opentype'),
-  url('fonts.cdnfonts.com/css/shket');
+  font-style: normal;
+  font-weight: 400;
+  src: url('shket-russian.woff2') format('woff2'),
+      url('shket-russian.woff') format('woff'),
+      url('shket-russian.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Shket';
+  font-style: normal;
+  font-weight: 400;
+  src: url('shket-english.woff2') format('woff2'),
+      url('shket-english.woff') format('woff'),
+      url('shket-english.ttf') format('truetype');
 }
