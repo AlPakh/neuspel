@@ -37,9 +37,9 @@ function showTransitionScreen(level) {
 
 // Настройки игры для каждого уровня
 const levelSettings = {
-    1: { duration: 40, indicatorTimeout: { min: 3, max: 4 }, clickTolerance: 1, timeMod: 1 },
-    2: { duration: 30, indicatorTimeout: { min: 3, max: 5 }, clickTolerance: 0.7, timeMod: 1 },
-    3: { duration: 15, indicatorTimeout: { min: 2, max: 4 }, clickTolerance: 1, timeMod: -1  }
+    1: { duration: 40, indicatorTimeout: { min: 3, max: 5 }, clickTolerance: 1, timeMod: "1" },
+    2: { duration: 30, indicatorTimeout: { min: 3, max: 5 }, clickTolerance: 0.7, timeMod: "1" },
+    3: { duration: 15, indicatorTimeout: { min: 2, max: 5 }, clickTolerance: 1, timeMod: "-1"  }
 };
 
 let currentLevel;
@@ -51,8 +51,12 @@ let timeLeft;
 function startLevel(level) {
     currentLevel = level;
     timeLeft = levelSettings[level].duration;
-    updateCountdownTimer();
-    gameTimer = setInterval(updateCountdownTimer, 1000); // Таймер уровня
+    switch(levelSettings[level].timeMod){
+        case "-1":
+            gameTimer = setInterval(updateCountupTimer, 1000); // Таймер уровня
+        default:
+            gameTimer = setInterval(updateCountdownTimer, 1000); // Таймер уровня
+    }
     activateIndicator(); // Активируем первый индикатор
     console.log("Начинаем уровень " + level);
     // Показать игровой экран
@@ -67,10 +71,18 @@ function updateCountdownTimer() {
     if (timeLeft > 0) {
         timeLeft--;
         document.getElementById("countdown-timer").textContent = formatTime(timeLeft);
-    } else {
+    } 
+    else 
+    {
         clearInterval(gameTimer);
         endLevel(); // Завершить уровень
     }
+}
+
+// Функция обновления таймера для третьего уровня
+function updateCountupTimer() {
+        timeLeft = Math.floor(Math.random() * 3600) + 2;
+        document.getElementById("countdown-timer").textContent = formatTime(timeLeft);
 }
 
 // Форматирование времени для отображения
@@ -80,6 +92,9 @@ function formatTime(seconds) {
     return minutes.toString().padStart(2, '0') + ':' + sec.toString().padStart(2, '0');
 }
 
+let activationTimerId; // Идентификатор для таймера активации индикатора
+let clickWindowTimerId; // Идентификатор для таймера "окна для клика"
+
 // Функция для активации одного случайного индикатора
 function activateIndicator() {
     const indicators = document.querySelectorAll('.indicator');
@@ -88,7 +103,7 @@ function activateIndicator() {
     
     const timeoutSeconds = getRandomTimeoutSeconds(currentLevel);
     // Устанавливаем время, через которое индикатор станет активным
-    setTimeout(() => {
+    activationTimerId = setTimeout(() => {
         selectedIndicator.textContent = timeoutSeconds; // Отображаем время на индикаторе
         selectedIndicator.dataset.requiredTime = timeoutSeconds; // Записываем в свойства
         selectedIndicator.classList.add('clickable', 'active'); // Сделать индикатор кликабельным и активным
@@ -96,7 +111,7 @@ function activateIndicator() {
 
 
         // Устанавливаем таймер для "окна для клика"
-        setTimeout(() => {
+        clickWindowTimerId = setTimeout(() => {
             // Если индикатор все еще кликабелен после окна для клика, игрок проиграл
             if (selectedIndicator.classList.contains('clickable')) {
                 selectedIndicator.classList.remove('clickable', 'active');
@@ -163,7 +178,6 @@ function endLevel() {
 // Если игрок не успевает кликнуть на индикатор
 function failLevel(a) {
     alert('Код проигрыша '+ a);
-    clearInterval(gameTimer);
     resetGame();
 }
 
@@ -178,7 +192,20 @@ function showVictoryScreen() {
 function resetGame() {
     // Скрыть игровой экран и очистить все таймеры и данные
     document.getElementById("game-screen").style.display = "none";
-    const indicatorsContainer = document.getElementById('indicators-container');
+    const indicatorsContainer = document.querySelectorAll('.indicator');
+    
+    clearInterval(gameTimer);
+    clearTimeout(activationTimerId);
+    clearTimeout(clickWindowTimerId);
+
+    indicatorsContainer.forEach(indicator => {
+        if(indicator.classList.length > 0)
+        {
+            indicator.classList.remove('active', 'clickable');
+        }
+        indicator.dataset.remove;
+    });
+
     document.getElementById("main-menu").style.display = "flex";
 }
 
