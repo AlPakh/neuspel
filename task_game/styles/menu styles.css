@@ -87,9 +87,9 @@
       width: 100%;
     }
     
-    #instruction-page-indicator {    /* Индикатор страниц */
-      /*border: 2px solid orange;*/
-    }
+    /* #instruction-page-indicator {    /* Индикатор страниц 
+      border: 2px solid orange;
+    } */
   
     #back-to-menu-from-instructions, #back-to-menu-from-scoreboard{
       position: absolute;
@@ -98,7 +98,7 @@
       margin: 10px;
       color: white;
       border-color: white;
-      font-size: calc(24px + 1vmin);
+      font-size: calc(24px + 1vmax);
       font-family: 'Shket';
       border-width: 3px;
       border-radius: 10%;
