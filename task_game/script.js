@@ -51,6 +51,7 @@ let timeLeft;
 function startLevel(level) {
     currentLevel = level;
     timeLeft = levelSettings[level].duration;
+    document.getElementById("countdown-timer").textContent = formatTime(timeLeft);
     switch(levelSettings[level].timeMod){
         case "-1":
             gameTimer = setInterval(updateCountupTimer, 1000); // Таймер уровня

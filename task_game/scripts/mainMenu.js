@@ -23,6 +23,14 @@ document.getElementById("start-game").addEventListener("click", function() {
 // Логика для старта катсцены
 function startCutscene() {
     document.getElementById("cutscene-screen").style.display = "flex";
+    const firstLaunch = localStorage.getItem('firstLaunch');
+    if (firstLaunch != "true") {
+        localStorage.setItem('firstLaunch', "true");
+        document.getElementById("cutscene-skip-button").style.display = "none";
+    }
+    else{
+        document.getElementById("cutscene-skip-button").style.display = "block";
+    }
     showCutsceneText();
 }
 

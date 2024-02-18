@@ -46,9 +46,9 @@
 
             <div id="main-menu">
                 <div id="title" contenteditable="false">Буревестник</div>
-                <button class="main-menu-button" id="start-game">Начать &nbsp; игру</button>
+                <button class="main-menu-button" id="start-game">Начать игру</button>
                 <button class="main-menu-button" id="instructions">Инструкция</button>
-                <button class="main-menu-button" id="scoreboard">Таблица &nbsp; результатов</button>
+                <button class="main-menu-button" id="scoreboard">Таблица результатов</button>
                 <script src="scripts/mainMenu.js"></script>
             </div>
             
@@ -81,8 +81,12 @@
 
             <!-- Катсцена в начале игры -->
             <div id="cutscene-screen" style="display:none;">
+                <button id="cutscene-skip-button">Пропустить</button>
                 <img id="cutscene-image" src="img/ship.png" alt="Катсцена" />
-                <div id="cutscene-text" class="cutscene-text"></div>
+                <div class="cut-text-container" id="cut-text-container">
+                    <div id="cutscene-text" class="cutscene-text"></div>
+                    <div id="click-continue-text" class="cutscene-text" style="display: flex;"></div>
+                </div>
                 <script src="scripts/cutscene.js"></script>
             </div>
 

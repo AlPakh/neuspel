@@ -13,17 +13,65 @@
     max-width: 80%;
     height: 40vh;
   }
+
+  .cut-text-container{
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон для текста */
+    user-select: none;
+  }
   
   .cutscene-text {
-    margin-top: 20px;
+    margin: 0;
     margin-left: 4vw;
     margin-right: 4vw;
-    background: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон для текста */
     color: #fff;
-    padding: 20px;
     cursor: pointer;
     width: 95vw;
     font-size: calc(24px + 1vmin);
     font-family: 'Shket';
-
   }
+
+  #cutscene-skip-button{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 10px;
+    color: white;
+    border-color: white;
+    font-size: calc(24px + 1vmin);
+    font-family: 'Shket';
+    border-width: 3px;
+    border-radius: 10%;
+
+    background-color: transparent;
+  }
+
+#click-continue-text{
+    animation: continueGlow 2s ease-in-out infinite;
+    right: 0;
+    margin-right: 4vw;
+    justify-content: end;
+}
+
+  @keyframes continueGlow {
+    0% {
+      opacity: 1;
+    }
+  
+    45% {
+      opacity: 0.95;
+    }
+
+    50% { 
+      opacity: 0;
+    }
+  
+    95% {
+      opacity: 0;
+    }
+
+    100%{
+      opacity: 1;
+    }
+  } 
