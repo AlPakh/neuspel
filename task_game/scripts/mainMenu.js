@@ -1,6 +1,7 @@
 var lastUser = getCurrentUser();
+var storedUsers = getUsers();
 document.getElementById('title').innerHTML = lastUser.username;
-if(lastUser.userdata.firstLaunch == 'false'){
+if(lastUser.userdata.firstLaunch == 'false' && storedUsers.length == 1){
     document.getElementById('change-name').classList.add('unavailable-button');
 }
 else{
@@ -86,7 +87,8 @@ document.getElementById("instructions").addEventListener("click", function() {
 
 document.getElementById("scoreboard").addEventListener("click", function() {
     document.getElementById("main-menu").style.display = "none";
-    document.getElementById("scoreboard-screen").style.display = "block";
+    showScoreboard();
+    document.getElementById("scoreboard-screen").style.display = "flex";
 });
 
 //Фильтрация недопустимых символов
@@ -105,6 +107,11 @@ document.getElementById('title').addEventListener('input', function(e) {
 
     // Обновляем значение поля ввода
     this.textContent = filtered;
+
+    if (this.textContent.length > 16) {
+        // Обрезаем текст до максимально допустимой длины
+        this.textContent = this.textContent.substr(0, 16);
+    }
 
     if (isValueChanged) {
         // Восстанавливаем позицию курсора в конце текста

@@ -1,10 +1,3 @@
-document.getElementById("back-to-menu-from-scoreboard").addEventListener("click", function() {
-    document.getElementById("scoreboard-screen").style.display = "none";
-    document.getElementById("main-menu").style.display = "flex";
-});
-
-
-
 // Функция для показа страницы перехода и автоматического перехода на уровень
 function showTransitionScreen(level) {
     // Обновить localStorage, если текущий уровень больше сохранённого
@@ -262,6 +255,7 @@ function resetGame() {
 
     if(!maxGameScore || maxGameScore < gameScore){
         lastUser.userdata.maxGameScore = gameScore.toString();
+        changeUser(lastUser);
     }
 
     gameScore = 0;
