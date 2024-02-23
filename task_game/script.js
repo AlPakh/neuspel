@@ -3,12 +3,15 @@ document.getElementById("back-to-menu-from-scoreboard").addEventListener("click"
     document.getElementById("main-menu").style.display = "flex";
 });
 
+
+
 // Функция для показа страницы перехода и автоматического перехода на уровень
 function showTransitionScreen(level) {
     // Обновить localStorage, если текущий уровень больше сохранённого
-    const levelReached = localStorage.getItem('levelReached');
+    const levelReached = lastUser.userdata.levelReached;
     if (!levelReached || parseInt(level, 10) > parseInt(levelReached, 10)) {
-        localStorage.setItem('levelReached', level.toString());
+        lastUser.userdata.levelReached = level.toString();
+        changeUser(lastUser);
     }
 
     // Показать страницу перехода
@@ -24,8 +27,8 @@ function showTransitionScreen(level) {
 
 // Инициализация игры (можно вызвать при полной загрузке страницы)
 function initGame() {
-    const levelReached = localStorage.getItem('levelReached');
-    const maxGameScore = localStorage.getItem('maxGameScore');
+    const levelReached = lastUser.userdata.levelReached;
+    const maxGameScore = lastUser.userdata.maxGameScore;
     // ... Остальной код инициализации игры
     initIndicators(); // Инициализация индикаторов
 }
@@ -50,7 +53,8 @@ let gameScore = 0;
 let activationTimerId; // Идентификатор для таймера активации индикатора
 let clickWindowTimerId; // Идентификатор для таймера "окна для клика"
 let activeIndicators = document.querySelectorAll('.indicator');
-const maxGameScore = localStorage.getItem('maxGameScore');
+var lastUser = getCurrentUser();
+const maxGameScore = lastUser.userdata.maxGameScore;
 
 // Функция для начала уровня
 function startLevel(level) {
@@ -257,8 +261,11 @@ function resetGame() {
     });
 
     if(!maxGameScore || maxGameScore < gameScore){
-        localStorage.setItem('maxGameScore', gameScore.toString());
+        lastUser.userdata.maxGameScore = gameScore.toString();
     }
+
+    gameScore = 0;
+    document.getElementById("score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
 
     setTimeout(() => {
         document.getElementById("game-screen").style.display = "none";

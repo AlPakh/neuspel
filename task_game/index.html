@@ -8,6 +8,7 @@
     
 </head>
 <body>
+    <script src="scripts/json.js"></script>
     <div class="header"> 
         <div class="header_main">        
             <div class="logo">
@@ -46,8 +47,9 @@
             <link rel="stylesheet" type="text/css" href="styles/cutscene styles.css">
 
             <div id="main-menu">
-                <div id="title" contenteditable="false">Буревестник</div>
+                <div id="title" contenteditable="false" maxlength="16">Название</div>
                 <button class="main-menu-button" id="start-game">Начать игру</button>
+                <button class="main-menu-button" id="change-name" data-mode="off">Изменить имя</button>
                 <button class="main-menu-button" id="instructions">Инструкция</button>
                 <button class="main-menu-button" id="scoreboard">Таблица результатов</button>
                 <script src="scripts/mainMenu.js"></script>
