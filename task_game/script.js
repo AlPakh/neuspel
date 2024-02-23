@@ -143,11 +143,16 @@ function indicatorClicked(event) {
 
     //alert(currentTime + ' '+ activationTime + " " +  elapsed + " " + elapsed >= -levelSettings[currentLevel].clickTolerance + ' ' + elapsed <= levelSettings[currentLevel].clickTolerance)
 
-    if (elapsed >= timeOnIndicator-levelSettings[currentLevel].clickTolerance && elapsed <= timeOnIndicator+levelSettings[currentLevel].clickTolerance) {
+    var timeMin = parseInt(timeOnIndicator, 10)-parseFloat(levelSettings[currentLevel].clickTolerance);
+    var timeMax = parseInt(timeOnIndicator, 10)+parseFloat(levelSettings[currentLevel].clickTolerance);
+
+    if (elapsed >= timeMin && elapsed <= timeMax) {
         // Успешный клик
         event.target.classList.remove('clickable', 'active');
         event.target.textContent = '';
-        gameScore += Math.floor(((1/parseInt(levelSettings[currentLevel].clickTolerance, 10)) / Math.abs(elapsed-timeOnIndicator))*100);
+        var difficultyNum = 1/parseFloat(levelSettings[currentLevel].clickTolerance, 10);
+        var timeDifference = Math.abs(elapsed-timeOnIndicator);
+        gameScore += Math.floor((difficultyNum / timeDifference)*100);
         document.getElementById("score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
         activateIndicator(); // Активируем следующий индикатор
     } else {
@@ -195,9 +200,11 @@ function endLevel() {
         if(indicator.classList.length > 0)
         {
             indicator.classList.remove('active', 'clickable');
-            indicator.textContent = '';
         }
-        indicator.dataset.remove;
+        indicator.dataset.activationTime = '';
+        indicator.dataset.requiredTime = '';
+        indicator.textContent = '';
+        delete indicator.dataset;
     });
 
     setTimeout(() => {
@@ -254,7 +261,7 @@ function resetGame() {
     });
 
     if(!maxGameScore || maxGameScore < gameScore){
-        lastUser.userdata.maxGameScore = gameScore.toString();
+        lastUser.userdata.maxGameScore = gameScore;
         changeUser(lastUser);
     }
 
