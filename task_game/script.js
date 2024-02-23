@@ -42,17 +42,18 @@ let gameDOWNTimer; //Таймер, раз в секунду обновляющи
 let timeLeft; //Счётчик на таймере
 let timerIds = []; //Идентификаторы всех таймеров
 let gameScore = 0;
-    
+var lastUser = getCurrentUser();    
 let activationTimerId; // Идентификатор для таймера активации индикатора
 let clickWindowTimerId; // Идентификатор для таймера "окна для клика"
 let activeIndicators = document.querySelectorAll('.indicator');
-var lastUser = getCurrentUser();
 const maxGameScore = lastUser.userdata.maxGameScore;
 
 // Функция для начала уровня
 function startLevel(level) {
     currentLevel = level;
     timeLeft = levelSettings[level].duration;
+    lastUser = getCurrentUser();
+
     document.getElementById("countdown-timer").textContent = formatTime(timeLeft);
     switch(levelSettings[level].timeMod){
         case "-1":
@@ -103,7 +104,7 @@ function activateIndicator() {
     
     const timeoutSeconds = getRandomTimeoutSeconds(currentLevel);
     // Устанавливаем время, через которое индикатор станет активным
-    if(!selectedIndicator.classList.contains('clickable'))
+    if(!selectedIndicator.classList.contains('clickable') && selectedIndicator.textContent == '')
     {
         activationTimerId = setTimeout(() => {
             selectedIndicator.textContent = timeoutSeconds; // Отображаем время на индикаторе
