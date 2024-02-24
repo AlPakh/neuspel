@@ -7,12 +7,13 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
         var timerIds = []; //Идентификаторы всех таймеров
         
         if(!globScore){
-            var gameScore = 0; 
+            var qteGameScore = 0; 
         }
         else{
-            gameScore = globScore;
+            var qteGameScore = globScore;
         }
-        document.getElementById("indicator-score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
+        console.log('qte start' + qteGameScore);
+        document.getElementById("qte-score-text").textContent = "0".repeat(12-qteGameScore.toString().length) + qteGameScore.toString();
                                                                     
         var lastUser = getCurrentUser();    
         let canPressKeys = true;
@@ -61,6 +62,7 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
                 const panel = document.createElement('div');
                 panel.textContent = number; // Установка текста панельки
                 panel.classList.add('panel');
+                playPanel();
                 panel.style.left = `${Math.random() * (container.offsetWidth - 50)}px`; // Случайная позиция по X
                 panel.style.top = `${(Math.random() * (container.offsetHeight - 100)+50)}px`; // Случайная позиция по Y
                 panel.dataset.activationTime = Date.now(); // Записываем в свойства
@@ -78,9 +80,10 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
 
                         var difficultyNum = 1/parseFloat(levelSettings.clickTolerance, 10);
                         var timeDifference = Math.abs(elapsed);
-                        gameScore += Math.floor((difficultyNum / timeDifference)*3000);
-                        document.getElementById("qte-score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
+                        qteGameScore += Math.floor((difficultyNum / timeDifference)*3000);
+                        document.getElementById("qte-score-text").textContent = "0".repeat(12-qteGameScore.toString().length) + qteGameScore.toString();
 
+                        playSuccess();
 
                         panel.remove();
                         clearTimeout(activationTimerId);
@@ -117,7 +120,7 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
 
         // Завершение уровня
         async function endLevel() {
-            alert('Уровень ' + currentLevel + ' пройден!');
+            //alert('Уровень ' + currentLevel + ' пройден!');
             timeLeft = 0;
 
             clearInterval(gameDOWNTimer);
@@ -135,18 +138,22 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
                 document.getElementById('qte-game-objects-container').removeChild(panel);
             });
 
+            playLevel();
+
             setTimeout(() => {
                 document.getElementById("qte-game-screen").style.display = "none";
-                resolve(gameScore);
+                resolve(qteGameScore);
+                console.log('qte success' + qteGameScore);
 
-                gameScore = 0;
-                document.getElementById("indicator-score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
+                qteGameScore = 0;
+                document.getElementById("qte-score-text").textContent = "0".repeat(12-qteGameScore.toString().length) + qteGameScore.toString();
             }, 2000);
         }
 
         // Если игрок не успевает кликнуть на индикатор
         async function failLevel(a) {
-            alert('Код проигрыша '+ a);
+            //alert('Код проигрыша '+ a);
+            playFail();
             await resetGame();
         }
 
@@ -172,17 +179,20 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
             });
 
 
-            if(!maxGameScore || maxGameScore < gameScore){
-                lastUser.userdata.maxGameScore = gameScore;
+            if(!maxGameScore || maxGameScore < qteGameScore){
+                lastUser.userdata.maxGameScore = qteGameScore;
                 changeUser(lastUser);
             }
 
+            playLevel();
+
             setTimeout(() => {
                 document.getElementById("qte-game-screen").style.display = "none";
-                reject(gameScore);
+                reject(qteGameScore);
+                console.log('qte loss' + qteGameScore);
 
-                gameScore = 0;
-                document.getElementById("indicator-score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
+                qteGameScore = 0;
+                document.getElementById("qte-score-text").textContent = "0".repeat(12-qteGameScore.toString().length) + qteGameScore.toString();
             }, 2000);
         }
 

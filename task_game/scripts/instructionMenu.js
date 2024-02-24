@@ -27,6 +27,7 @@ function updateInstructionScreen() {
 }
 
 document.getElementById("prev-instruction").addEventListener("click", function() {
+    playSwitch();
     if (curInstPage > 1) {
         curInstPage--;
         updateInstructionScreen();
@@ -34,6 +35,7 @@ document.getElementById("prev-instruction").addEventListener("click", function()
 });
 
 document.getElementById("next-instruction").addEventListener("click", function() {
+    playSwitch();
     if (curInstPage < totInstPages) {
         curInstPage++;
         updateInstructionScreen();
@@ -41,6 +43,7 @@ document.getElementById("next-instruction").addEventListener("click", function()
 });
 
 document.getElementById("back-to-menu-from-instructions").addEventListener("click", function() {
+    playSwitch();
     document.getElementById("instruction-screen").style.display = "none";
     document.getElementById("main-menu").style.display = "flex";
 });

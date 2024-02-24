@@ -13,6 +13,7 @@ else{
 //Сохранение имени нового пользователя
 function changeNameButtonPressed(){
     var changeNameButton = document.getElementById('change-name');
+    playSwitch();
     if(changeNameButton.dataset.mode == 'off'){
         document.getElementById('title').contentEditable = true;
         
@@ -25,7 +26,7 @@ function changeNameButtonPressed(){
         document.getElementById('title').textContent.select
         changeNameButton.textContent = 'Сохранить имя';
 
-        
+
 
         changeNameButton.dataset.mode = 'active';
     }
@@ -47,17 +48,20 @@ function changeNameButtonPressed(){
 
 document.getElementById("start-game").addEventListener("click", function() {
     var lastUser = getCurrentUser();
+    playSwitch();
     const levelReached = lastUser.userdata.levelReached;
     document.getElementById("main-menu").style.display = "none"; // Скрыть главное меню
     if (levelReached && levelReached == '3') {        // Показать экран с выбором продолжения игры
         // Обработчик клика для начала игры с катсцены
         document.getElementById("ng-button").addEventListener("click", function() {
+            playSwitch();
             document.getElementById("continue-screen").style.display = "none";
             startCutscene();
         });
 
         // Обработчик клика для начала игры с третьего уровня
         document.getElementById("continue-button").addEventListener("click", function() {
+            playSwitch();
             document.getElementById("continue-screen").style.display = "none";
             startGame(3);
         });
@@ -85,12 +89,14 @@ function startCutscene() {
 }
 
 document.getElementById("instructions").addEventListener("click", function() {
+    playSwitch();
     document.getElementById("main-menu").style.display = "none";
     updateInstructionScreen();
     document.getElementById("instruction-screen").style.display = "block";
 });
 
 document.getElementById("scoreboard").addEventListener("click", function() {
+    playSwitch();
     document.getElementById("main-menu").style.display = "none";
     showScoreboard();
     document.getElementById("scoreboard-screen").style.display = "flex";

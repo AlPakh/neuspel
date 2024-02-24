@@ -7,12 +7,13 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
         var timerIds = []; //Идентификаторы всех таймеров
 
         if(!globScore){
-            var gameScore = 0; 
+            var indGameStore = 0; 
         }
         else{
-            gameScore = globScore;
+            var indGameStore = globScore;
         }
-        document.getElementById("indicator-score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();                             
+        console.log('ind start' + indGameStore);
+        document.getElementById("indicator-score-text").textContent = "0".repeat(12-indGameStore.toString().length) + indGameStore.toString();                             
         
         var lastUser = getCurrentUser();    
         var activationTimerId; // Идентификатор для таймера активации индикатора
@@ -35,7 +36,7 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
             const indicators = document.querySelectorAll('.indicator');
             indicators.forEach(indicator => {
                 indicator.textContent = ''; // Очищаем текст
-                indicator.classList.remove('active', 'clickable');
+                indicator.classList.remove('clickable');
                 // Добавляем обработчик клика, если его еще нет
                 indicator.onclick = indicator.onclick || indicatorClicked;
             });
@@ -74,7 +75,8 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
                 activationTimerId = setTimeout(() => {
                     selectedIndicator.textContent = timeoutSeconds; // Отображаем время на индикаторе
                     selectedIndicator.dataset.requiredTime = timeoutSeconds; // Записываем в свойства
-                    selectedIndicator.classList.add('clickable', 'active'); // Сделать индикатор кликабельным и активным
+                    selectedIndicator.classList.add('clickable'); // Сделать индикатор кликабельным и активным
+                    playPanel();
                     selectedIndicator.dataset.activationTime = Date.now(); // Запоминаем момент активации
                     if(currentLevel == 3) {activateIndicator();}
 
@@ -82,8 +84,11 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
                     clickWindowTimerId = setTimeout(() => {
                         // Если индикатор все еще кликабелен после окна для клика, игрок проиграл
                         if (selectedIndicator.classList.contains('clickable')) {
-                            selectedIndicator.classList.remove('clickable', 'active');
+                            selectedIndicator.classList.remove('clickable');
+                            selectedIndicator.style.backgroundColor = "red";
                             failLevel(2);
+                            clearTimeout(clickWindowTimerId);
+                            clearTimeout(activationTimerId);
                         }
                     }, (timeoutSeconds + levelSettings.clickTolerance) * 1000);
                     timerIds.push(clickWindowTimerId);
@@ -96,7 +101,7 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
         }
 
         // Обработка клика по индикатору
-        async function indicatorClicked(event) {
+        function indicatorClicked(event) {
             if (!event.target.classList.contains('clickable')) {
                 return; // Индикатор не готов к нажатию
             }
@@ -112,16 +117,18 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
 
             if (elapsed >= timeMin && elapsed <= timeMax) {
                 // Успешный клик
-                event.target.classList.remove('clickable', 'active');
+                event.target.classList.remove('clickable');
                 event.target.textContent = '';
                 var difficultyNum = 1/parseFloat(levelSettings.clickTolerance, 10);
                 var timeDifference = Math.abs(elapsed-timeOnIndicator);
-                gameScore += Math.floor((difficultyNum / timeDifference)*50);
-                document.getElementById("indicator-score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
+                indGameStore += Math.floor((difficultyNum / timeDifference)*100);
+                playSuccess();
+                document.getElementById("indicator-score-text").textContent = "0".repeat(12-indGameStore.toString().length) + indGameStore.toString();
                 activateIndicator(); // Активируем следующий индикатор
             } else {
                 // Нажатие вне временного окна
-                await failLevel('1');
+                event.target.style.backgroundColor = "red";
+                failLevel('1');
             }
         }
 
@@ -133,7 +140,7 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
 
         // Завершение уровня
         async function endLevel() {
-            alert('Уровень ' + currentLevel + ' пройден!');
+            //alert('Уровень ' + currentLevel + ' пройден!');
             timeLeft = 0;
 
             clearInterval(gameDOWNTimer);
@@ -149,7 +156,7 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
             indicatorsContainer.forEach(indicator => {
                 if(indicator.classList.length > 0)
                 {
-                    indicator.classList.remove('active', 'clickable');
+                    indicator.classList.remove('clickable');
                 }
                 indicator.dataset.activationTime = '';
                 indicator.dataset.requiredTime = '';
@@ -157,23 +164,27 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
                 delete indicator.dataset;
             });
 
+            playLevel();
+
             setTimeout(() => {
                 document.getElementById("indicator-game-screen").style.display = "none";
-                resolve(gameScore);
+                resolve(indGameStore);
+                console.log('ind success' + indGameStore);
 
-                gameScore = 0;
-                document.getElementById("indicator-score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
+                indGameStore = 0;
+                document.getElementById("indicator-score-text").textContent = "0".repeat(12-indGameStore.toString().length) + indGameStore.toString();
             }, 2000);
         }
 
         // Если игрок не успевает кликнуть на индикатор
         async function failLevel(a) {
-            alert('Код проигрыша '+ a);
-            await resetGame(a);
+            //alert('Код проигрыша '+ a);
+            playFail();
+            await resetGame();
         }
 
         // Функция для сброса игры или подготовки к новой игре
-        async function resetGame(a) {
+        async function resetGame() {
             // Скрыть игровой экран и очистить все таймеры и данные
                 timeLeft = 0;
 
@@ -190,23 +201,26 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
                 indicatorsContainer.forEach(indicator => {
                     if(indicator.classList.length > 0)
                     {
-                        indicator.classList.remove('active', 'clickable');
+                        indicator.classList.remove('clickable');
                         indicator.textContent = '';
                     }
                     indicator.dataset.remove;
                 });
 
-                if(!maxGameScore || maxGameScore < gameScore){
-                    lastUser.userdata.maxGameScore = gameScore;
+                if(!maxGameScore || maxGameScore < indGameStore){
+                    lastUser.userdata.maxGameScore = indGameStore;
                     changeUser(lastUser);
                 }
 
+                playLevel();
+
                 setTimeout(() => {
                     document.getElementById("indicator-game-screen").style.display = "none";
-                    reject(gameScore);
+                    reject(indGameStore);
+                    console.log('ind loss' + indGameStore);
 
-                    gameScore = 0;
-                    document.getElementById("indicator-score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
+                    indGameStore = 0;
+                    document.getElementById("indicator-score-text").textContent = "0".repeat(12-indGameStore.toString().length) + indGameStore.toString();
                 }, 2000);
             
         }

@@ -1,4 +1,5 @@
 document.getElementById("back-to-menu-from-scoreboard").addEventListener("click", function() {
+    playSwitch();
     document.getElementById("scoreboard-screen").style.display = "none";
     if(document.getElementById('tabPics')){
         document.getElementById("scoreboard-screen").removeChild(document.getElementById('tabPics'));
@@ -19,17 +20,12 @@ function showScoreboard(){
     document.getElementById('tabPics').appendChild(row);
 
     var cell = document.createElement('td');
-    cell.textContent = ' Имя корабля '; 
+    cell.textContent = ' Корабль '; 
     document.getElementById('basic_row').appendChild(cell);
 
     
     var cell = document.createElement('td');
-    cell.textContent = 'Первый запуск был'; 
-    document.getElementById('basic_row').appendChild(cell);
-
-    
-    var cell = document.createElement('td');
-    cell.textContent = 'Достигнутый уровень'; 
+    cell.textContent = 'Достиг уровня'; 
     document.getElementById('basic_row').appendChild(cell);
 
     
@@ -45,7 +41,7 @@ function showScoreboard(){
 
         var cell = document.createElement('td');
         cell.textContent = 'Тут пока пустовато'; 
-        cell.colSpan = 4;
+        cell.colSpan = 3;
         document.getElementById('empty row').appendChild(cell);
     }
     else{
@@ -57,11 +53,6 @@ function showScoreboard(){
 
                 var cell = document.createElement('td');
                 cell.textContent = element.username; 
-                document.getElementById('el_' + element.username).appendChild(cell);
-
-                
-                var cell = document.createElement('td');
-                cell.textContent = element.userdata.firstLaunch; 
                 document.getElementById('el_' + element.username).appendChild(cell);
 
                 

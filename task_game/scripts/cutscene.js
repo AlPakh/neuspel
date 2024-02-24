@@ -24,6 +24,7 @@ function showCutsceneText() {
 }
 
 function nextCutsceneText() {
+    playSwitch();
     clearTimeout(timerChars); // Очищаем текущий таймер, если он есть
     if (currentCharIndex < cutsceneTexts[currentTextIndex].length) // Если текст ещё не закончил выводиться, выводим его полностью
     {

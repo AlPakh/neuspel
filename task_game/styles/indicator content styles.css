@@ -22,19 +22,21 @@
   display: flex;
   justify-content: space-around;
   width: 100%;
-  background-color: green; /* Временный цвет для наглядности */
+  background-color: #3f3f3f;
 }
 
 /* Элементы-индикаторы */
 .indicator {
   width: 100px; /* Примерный размер, настраивайте под свои нужды */
   height: 100px;
-  background-color: purple; /* Временный цвет для наглядности */
+  background-color: #232323;; /* Временный цвет для наглядности */
   display: flex;
   align-items: center;
   justify-content: center;
   color: white; /* Цвет текста */
   font-size: 1.5em; /* Размер текста */
+  font-family: 'Kroftsmann';
+  clip-path: polygon(15% 5%, 85% 5%, 100% 28%, 85% 95%, 15% 95%, 0% 28%);
   
   cursor: crosshair;
 }

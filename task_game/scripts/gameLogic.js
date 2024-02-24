@@ -46,7 +46,7 @@ async function startGame(lvl){
 
 
         //Получаем случайный порядок миниигр
-        var gameIndexes = [/*0,*/ 1/*, 2*/];        //==================================================ДОБАВЛЯТЬ ПО МЕРЕ ГОТОВНОСТИ
+        var gameIndexes = [0, 1/*, 2*/];        //==================================================ДОБАВЛЯТЬ ПО МЕРЕ ГОТОВНОСТИ
         var gamesOrder = [];
         var n = gameIndexes.length
 
@@ -98,7 +98,10 @@ async function startGame(lvl){
                             break;
                         }
                 }
-                globScore += cgameScore;
+                
+                console.log('after level' + cgameScore);
+                globScore = cgameScore;
+                console.log('now global' + globScore);
                 gameFinished = true;
             }
             gameToLaunchIndex++;
@@ -143,6 +146,7 @@ async function showTransitionScreen(hardLevel, commentText, currRName) {
 
 
             document.getElementById("transition-screen").onclick = function(){
+                playSwitch();
                 document.getElementById("transition-screen").style.display = "none";
                 document.getElementById("transition-comment").textContent = "На этом..." + hardLevel;
                 document.getElementById("transition-next").style.opacity = 0;
@@ -165,6 +169,7 @@ async function showEndScreen(finText, globScore) {
         document.getElementById("total-game-score").textContent = 'Счёт: ' + globScore + '\r\nРекорд: ' + endUser.userdata.maxGameScore;
         
         document.getElementById("from-end-to-menu-button").onclick = function(){
+            playSwitch();
             document.getElementById("game-over-screen").style.display = "none";
             document.getElementById("main-menu").style.display = "flex";
             resolve();
