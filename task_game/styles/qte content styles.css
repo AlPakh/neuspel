@@ -1,0 +1,51 @@
+#qte-game-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around; /* Распределение пространства вокруг дочерних элементов */
+    height: 100%;
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box; /* Убедитесь, что padding не изменяет размеры */
+}
+
+/* Контейнер для динамически генерирующихся объектов */
+#qte-game-objects-container {
+    flex-grow: 1; /* Контейнер будет расти и занимать доступное пространство */
+    width: 100%;
+    background-color: orange; /* Временный цвет для наглядности */
+}
+
+  /* Текстовое поле для таймера обратного отсчёта */
+#qte-countdown-timer {
+    font-size: 2em; /* Размер шрифта для таймера */
+    color: white;
+    background-color: brown; /* Временный цвет для наглядности */
+    padding: 10px;
+    margin-top: 20px; /* Отступ сверху */
+}
+
+.panel{
+    display: flex;
+    position: absolute;
+    background-color:green;
+    color: white;
+    padding: 20px;
+
+    font-size: calc(26px + 1vmax);
+    font-family: 'Kroftsmann';
+
+    height: calc(30px + 2vmax);
+    width: calc(30px + 2vmax);
+
+
+    border-radius: 50%;
+    cursor: not-allowed;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+    justify-items: center;
+    text-justify: center;
+    line-height: calc(30px + 2vmax);
+    user-select: none;
+}

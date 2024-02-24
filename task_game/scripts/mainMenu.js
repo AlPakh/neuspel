@@ -54,7 +54,7 @@ document.getElementById("start-game").addEventListener("click", function() {
         // Обработчик клика для начала игры с третьего уровня
         document.getElementById("continue-button").addEventListener("click", function() {
             document.getElementById("continue-screen").style.display = "none";
-            showTransitionScreen('3');
+            startGame(3);
         });
         document.getElementById("continue-screen").style.display = "flex";
     } 

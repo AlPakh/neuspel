@@ -19,8 +19,23 @@
   }
 
   div[contenteditable="true"]:focus {
-    outline: 1px solid blue; /* или любой другой видимый стиль границы */
-}
+    outline: 1px solid blue; 
+    animation: change-text-active 1s infinite;
+  }
+
+@keyframes change-text-active {
+  0% {
+    outline-color: blue;
+  }
+
+  50% { 
+    outline-color: transparent;
+  }
+
+  100%{
+    outline-color: blue;
+  }
+} 
   
   .main-menu-button{
     font-size: 0.6em;
@@ -86,24 +101,18 @@
     }
     
     #instruction-text {    /* Текстовый блок */
-      border: 2px solid green;
       padding: 10px 0 10px 0;
       text-align: center;
       width: 100%;
     }
     
     #instruction-image {    /* Изображение */
-      /*border: 2px solid blue;*/
       min-width: 300px;
       min-height: 200px;
       width: 100%;
     }
-    
-    /* #instruction-page-indicator {    /* Индикатор страниц 
-      border: 2px solid orange;
-    } */
   
-    #back-to-menu-from-instructions, #back-to-menu-from-scoreboard{
+    #back-to-menu-from-instructions, #back-to-menu-from-scoreboard, #from-end-to-menu-button{
       position: absolute;
       left: 0;
       top: 0;
@@ -126,8 +135,21 @@
       gap: 10px;
     }
   
-    #transition-screen{
+    #transition-screen, #game-over-screen{
       font-size: 10vmin;
       color: #fff;
       font-family: 'Kroftsmann';
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      line-height: 10vmin;
+    }
+  
+    #transition-comment, #transition-next, #total-game-score{
+      font-size: 0.5em;
+      line-height: 1em;
+      color: #fff;
+      font-family: 'Shket';
+      padding: 2vh 12vw 0 12vw;
+      text-align: center;
     }

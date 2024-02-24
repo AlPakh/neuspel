@@ -42,7 +42,8 @@
 
     <div class="container">
         <div class="content-div" id="content-div">
-            <link rel="stylesheet" type="text/css" href="content styles.css">
+            <link rel="stylesheet" type="text/css" href="styles/indicator content styles.css">
+            <link rel="stylesheet" type="text/css" href="styles/qte content styles.css">
             <link rel="stylesheet" type="text/css" href="styles/menu styles.css">
             <link rel="stylesheet" type="text/css" href="styles/cutscene styles.css">
 
@@ -97,12 +98,14 @@
             <!-- Экран сообщения о переходе на уровень-->
             <div id="transition-screen" style="display:none;">
                 <div id="transition-message">Переход на уровень...</div>
+                <div id="transition-comment" style="white-space: pre-line">На этом уровне</div>
+                <div id="transition-next" style="text-align: right;">Нажмите, чтобы продолжить . . .</div>
             </div>
-
-            <div id="game-screen" style="display:none;">
+            
+            <!-- Экран c игрой про индикаторы -->
+            <div id="indicator-game-screen" style="display:none;">
                 <!-- Контейнер для динамически генерирующихся объектов -->
-                <div id="game-objects-container">
-                </div>
+                <div id="indicator-game-objects-container"></div>
 
                 <!-- Контейнер для элементов индикаторов -->
                 <div id="indicators-container">
@@ -114,11 +117,31 @@
                 <!-- Текстовое поле для таймера обратного отсчёта -->
                 <div id="countdown-timer">00:00</div>
                 
-                <div id="score-text" class="score-text">000000000000<div>
+                <div id="indicator-score-text" class="score-text">000000000000</div>
             </div>
 
-            <script src="script.js"></script>
+            <div id="qte-game-screen" style="display:none;">
+                <!-- Контейнер для динамически генерирующихся объектов -->
+                <div id="qte-game-objects-container">
+                </div>
+                
+                <!-- Текстовое поле для таймера обратного отсчёта -->
+                <div id="qte-countdown-timer">00:00</div>
+                
+                <div id="qte-score-text" class="score-text">000000000000</div>
+            </div>
+
+            <div id="game-over-screen" style="display:none;">
+                <div id="game-results"></div>
+                <div id="total-game-score" style="white-space: pre-line">Счёт</div>
+                <button id="from-end-to-menu-button">В меню</button>
+            </div>
+
+            <script src="scripts/gameLogic.js"></script>
+            <script src="scripts/indicatorsLevel.js"></script>
+            <script src="scripts/qteLevel.js"></script>
         </div>
+    
     </div>
 
     <div class="warning" style="display: none; ">

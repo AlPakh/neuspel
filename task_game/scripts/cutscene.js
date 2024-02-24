@@ -4,8 +4,8 @@ let timerChars;
 
 const cutsceneTexts = [
     "Вы сидите в кабине космического корабля",
-    "Системы безопастности предупреждают вас о приближающихся астероидах",
-    "Ваша задача нажимать на индикаторы через указанное на них время",
+    "На вас летит поток астероидов",
+    "Ваша задача выполнять задания на время",
 ];
 
 function showCutsceneText() {
@@ -47,7 +47,7 @@ function nextCutsceneText() {
         currentTextIndex = 0;
         currentCharIndex = 0;
         // Отобразить экран перехода к первому уровню
-        showTransitionScreen('1');
+        startGame();
         document.getElementById("click-continue-text").textContent = ". . .";
         document.getElementById("cutscene-text").textContent = "";
     }
