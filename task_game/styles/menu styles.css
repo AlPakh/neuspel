@@ -16,6 +16,9 @@
     text-align: center;
     line-height: 100%;
     padding: 10px;
+    caret-color: blue;
+    caret: 5px;
+    caret-shape: underscore;
   }
 
   div[contenteditable="true"]:focus {
@@ -25,15 +28,15 @@
 
 @keyframes change-text-active {
   0% {
-    outline-color: blue;
-  }
-
-  50% { 
     outline-color: transparent;
   }
 
-  100%{
+  50% { 
     outline-color: blue;
+  }
+
+  100%{
+    outline-color: transparent;
   }
 } 
   

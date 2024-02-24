@@ -21,7 +21,11 @@ function changeNameButtonPressed(){
         document.getElementById('scoreboard').classList.add('unavailable-button');
 
         document.getElementById('title').focus();
+        document.getElementById('title').style.userSelect = 'auto';
+        document.getElementById('title').textContent.select
         changeNameButton.textContent = 'Сохранить имя';
+
+        
 
         changeNameButton.dataset.mode = 'active';
     }
@@ -32,6 +36,7 @@ function changeNameButtonPressed(){
         document.getElementById('scoreboard').classList.remove('unavailable-button');
 
         var newName = document.getElementById('title').textContent;
+        document.getElementById('title').style.userSelect = 'none';
         var parseName = newName.toUpperCase()
 
         newUser(parseName);
@@ -44,7 +49,7 @@ document.getElementById("start-game").addEventListener("click", function() {
     var lastUser = getCurrentUser();
     const levelReached = lastUser.userdata.levelReached;
     document.getElementById("main-menu").style.display = "none"; // Скрыть главное меню
-    if (levelReached && levelReached === '3') {        // Показать экран с выбором продолжения игры
+    if (levelReached && levelReached == '3') {        // Показать экран с выбором продолжения игры
         // Обработчик клика для начала игры с катсцены
         document.getElementById("ng-button").addEventListener("click", function() {
             document.getElementById("continue-screen").style.display = "none";

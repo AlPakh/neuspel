@@ -150,7 +150,7 @@ async function showTransitionScreen(hardLevel, commentText, currRName) {
                 resolve(); // Разрешаем промис, сигнализируя об окончании асинхронной операции                
             }
 
-        }, 3000);
+        }, 2000);
     });
 }
 

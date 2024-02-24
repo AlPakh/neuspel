@@ -77,7 +77,7 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
                         const elapsed = (currentTime - activationTime) / 1000;
 
                         var difficultyNum = 1/parseFloat(levelSettings.clickTolerance, 10);
-                        var timeDifference = Math.abs(elapsed-levelSettings.clickTolerance);
+                        var timeDifference = Math.abs(elapsed);
                         gameScore += Math.floor((difficultyNum / timeDifference)*3000);
                         document.getElementById("qte-score-text").textContent = "0".repeat(12-gameScore.toString().length) + gameScore.toString();
 

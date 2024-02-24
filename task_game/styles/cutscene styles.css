@@ -57,6 +57,7 @@
   @keyframes continueGlow {
     0% {
       opacity: 1;
+      color: yellow;
     }
   
     45% {
