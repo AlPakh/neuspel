@@ -51,7 +51,7 @@ document.getElementById("start-game").addEventListener("click", function() {
     playSwitch();
     const levelReached = lastUser.userdata.levelReached;
     document.getElementById("main-menu").style.display = "none"; // Скрыть главное меню
-    if (levelReached && levelReached == '3') {        // Показать экран с выбором продолжения игры
+    if (levelReached && levelReached != '0') {        // Показать экран с выбором продолжения игры
         // Обработчик клика для начала игры с катсцены
         document.getElementById("ng-button").addEventListener("click", function() {
             playSwitch();
@@ -60,11 +60,18 @@ document.getElementById("start-game").addEventListener("click", function() {
         });
 
         // Обработчик клика для начала игры с третьего уровня
-        document.getElementById("continue-button").addEventListener("click", function() {
+        document.getElementById("continue-button-2").addEventListener("click", function() {
+            playSwitch();
+            document.getElementById("continue-screen").style.display = "none";
+            startGame(2);
+        });
+
+        document.getElementById("continue-button-3").addEventListener("click", function() {
             playSwitch();
             document.getElementById("continue-screen").style.display = "none";
             startGame(3);
         });
+
         document.getElementById("continue-screen").style.display = "flex";
     } 
     else {
