@@ -32,6 +32,7 @@
                     <a href="task_dom/index.html">DOM-тест</a>
                     <a href="task_dop/index.html">Пазл (доп.)</a>
                     <a href="task_php/world.php">Привет, PHP</a>
+                    <a href="task_mebel/index.php">Мебель</a>
                 </div>
             </div>
         </div>

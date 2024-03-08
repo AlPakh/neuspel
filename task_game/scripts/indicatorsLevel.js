@@ -85,7 +85,7 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
                         // Если индикатор все еще кликабелен после окна для клика, игрок проиграл
                         if (selectedIndicator.classList.contains('clickable')) {
                             selectedIndicator.classList.remove('clickable');
-                            selectedIndicator.style.backgroundColor = "red";
+                            selectedIndicator.style.background = "red";
                             failLevel(2);
                             clearTimeout(clickWindowTimerId);
                             clearTimeout(activationTimerId);
@@ -127,7 +127,7 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
                 activateIndicator(); // Активируем следующий индикатор
             } else {
                 // Нажатие вне временного окна
-                event.target.style.backgroundColor = "red";
+                event.target.style.background = "red";
                 failLevel('1');
             }
         }
@@ -157,11 +157,14 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
                 if(indicator.classList.length > 0)
                 {
                     indicator.classList.remove('clickable');
+                    indicator.textContent = '';
+                    indicator.style.clear;
                 }
                 indicator.dataset.activationTime = '';
                 indicator.dataset.requiredTime = '';
                 indicator.textContent = '';
                 delete indicator.dataset;
+                indicator.dataset.clear;
             });
 
             playLevel();
@@ -203,8 +206,11 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
                     {
                         indicator.classList.remove('clickable');
                         indicator.textContent = '';
+                        indicator.removeAttribute("style");
                     }
-                    indicator.dataset.remove;
+                    delete indicator.dataset.activationTime;
+                    delete indicator.dataset.requiredTime;
+                    indicator.textContent = '';
                 });
 
                 if(!maxGameScore || maxGameScore < indGameStore){
