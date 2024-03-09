@@ -5,9 +5,9 @@ async function startGame(lvl){
             ruName: 'Индикаторы', 
             message: 'На этом уровне надо следить за тремя индикаторами. Когда индикатор зажигается, на нём отображается время в секундах, через которое надо на него нажать', 
             settings: {
-                1: { duration: 30, indicatorTimeout: { min: 3, max: 5 }, clickTolerance: 1},
-                2: { duration: 20, indicatorTimeout: { min: 3, max: 5 }, clickTolerance: 0.5 },
-                3: { duration: 15, indicatorTimeout: { min: 2, max: 4 }, clickTolerance: 1 }
+                1: { duration: 30, indicatorTimeout: { min: 3, max: 5 }, indicatorDifference: { min: 2, max: 4 }, clickTolerance: 1, punishment: 5},
+                2: { duration: 20, indicatorTimeout: { min: 3, max: 5 }, indicatorDifference: { min: 2, max: 3 }, clickTolerance: 0.5, punishment: 4},
+                3: { duration: 15, indicatorTimeout: { min: 2, max: 3 }, indicatorDifference: { min: 2, max: 2 }, clickTolerance: 1, punishment: 3}
             }
         },
         {
@@ -15,9 +15,9 @@ async function startGame(lvl){
             ruName: 'QTE', 
             message: 'На этом уровне на экране появляются случайные клавиши с клавиатуры. Когда клавиша появляется на экране, нужно как можно быстрее нажать на соответствующую кнопку на клавиатуре', 
             settings: {
-                1: { duration: 20, indicatorTimeout: { min: 3, max: 4 }, clickTolerance: 2.5},
-                2: { duration: 15, indicatorTimeout: { min: 3, max: 4 }, clickTolerance: 2 },
-                3: { duration: 10, indicatorTimeout: { min: 2, max: 4 }, clickTolerance: 1.5 }
+                1: { duration: 20, indicatorTimeout: { min: 3, max: 3 }, clickTolerance: 2.5, punishment: 5},
+                2: { duration: 20, indicatorTimeout: { min: 2, max: 3 }, clickTolerance: 2, punishment: 4 },
+                3: { duration: 15, indicatorTimeout: { min: 1, max: 2 }, clickTolerance: 1.5, punishment: 3 }
             }
         }
     ];
@@ -119,10 +119,10 @@ async function startGame(lvl){
 
     var resText = '';
     if(gameFailed){
-        resText = "Конец игры";
+        resText = "Что-то сломалось";
     }
     else{
-        resText = "Победа!";
+        resText = "Конец игры!";
     }
     await showEndScreen(resText, globScore);
 

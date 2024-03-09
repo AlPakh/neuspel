@@ -27,7 +27,7 @@
 
 /* Элементы-индикаторы */
 .indicator {
-  width: 100px; /* Примерный размер, настраивайте под свои нужды */
+  width: 100px;
   height: 100px;
   background-color: #232323;; /* Временный цвет для наглядности */
   display: flex;
@@ -54,15 +54,49 @@
   background-color: blue;
 }
 
-.active{
-  color: red;
+.succlicked{
+  animation: indPosFade 1.5s ease-in-out forwards;
 }
+
+@keyframes indPosFade {
+  0% {
+    background-color: rgb(84, 210, 84);
+  }
+
+  66% { 
+    background-color: rgb(84, 210, 84);
+  }
+
+  100%{
+    background-color: #232323;
+    animation: none;
+  }
+} 
+
+.active{ /*Анимация неудачно нажатого индикатора*/
+  animation: indNegFade 1.5s ease-in-out forwards;
+}
+
+@keyframes indNegFade {
+  0% {
+    background-color: red;
+  }
+
+  66% { 
+    background-color: red;
+  }
+
+  100%{
+    background-color: #232323;
+    animation: none;
+  }
+} 
 
 .score-text{
   position: absolute;
   right: 0;
   top: 0;
-  margin: 20px;
+  margin: 20px 20px 0px 0px;
   color: white;
   font-size: calc(24px + 1vmax);
   font-family: 'Shket';
@@ -70,4 +104,37 @@
   padding: 5px 1em 5px 1em;
 
   background-color: black;
+}
+
+.score-difference{
+  top: 0;
+  right: 0;
+  margin: calc(20px + 5px + 24px + 1vmax) 20px 0px 0px;
+  text-align: right;
+}
+
+.score-animation{
+  animation: scoreFade 2s ease-in-out forwards;
+}
+
+@keyframes scoreFade {
+  0% {
+    opacity: 1;
+  }
+
+  50% { 
+    opacity: 1;
+  }
+
+  100%{
+    opacity: 0;
+  }
+} 
+
+.scoreplus{
+  color: rgb(84, 210, 84);
+}
+
+.scoreminus{
+  color: rgb(210, 84, 84);
 }

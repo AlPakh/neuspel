@@ -14,6 +14,8 @@
     flex-grow: 1; /* Контейнер будет расти и занимать доступное пространство */
     width: 100%;
     background-color: orange; /* Временный цвет для наглядности */
+    
+    cursor: none;
 }
 
   /* Текстовое поле для таймера обратного отсчёта */
@@ -48,3 +50,72 @@
     line-height: calc(30px + 2vmax);
     user-select: none;
 }
+
+@keyframes moveClockwise1 {
+    0% {
+      transform: rotate(0deg) translateX(70px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateX(70px) rotate(-360deg);
+    }
+}
+
+@keyframes moveClockwise2 {
+    0% {
+      transform: rotate(0deg) translateX(-70px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateX(-70px) rotate(-360deg);
+    }
+}
+
+@keyframes moveCounterclockwise1 {
+    0% {
+      transform: rotate(0deg) translateX(70px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg) translateX(70px) rotate(360deg);
+    }
+}
+
+@keyframes moveCounterclockwise2 {
+    0% {
+      transform: rotate(0deg) translateX(-70px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(-360deg) translateX(-70px) rotate(360deg);
+    }
+}
+
+.score-difference{
+    top: 0;
+    right: 0;
+    margin: calc(20px + 5px + 24px + 1vmax) 20px 0px 0px;
+    text-align: right;
+  }
+  
+  .score-animation{
+    animation: scoreFade 2s ease-in-out forwards;
+  }
+  
+  @keyframes scoreFade {
+    0% {
+      opacity: 1;
+    }
+  
+    50% { 
+      opacity: 1;
+    }
+  
+    100%{
+      opacity: 0;
+    }
+  } 
+  
+  .scoreplus{
+    color: rgb(84, 210, 84);
+  }
+  
+  .scoreminus{
+    color: rgb(210, 84, 84);
+  }
