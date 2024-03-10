@@ -47,6 +47,9 @@
     font-weight: 400;
     border: none;
     background-color: transparent;
+    padding-left: 1em;
+    padding-right: 1em;
+    overflow: hidden;
   }
 
   .unavailable-button{
@@ -54,9 +57,9 @@
     pointer-events: none;
   }
   
-  .main-menu-button:hover{
+  /* .main-menu-button:hover{
     text-decoration-line: underline overline;
-  }
+  } */
   
   #instruction-screen {
       display: none;
@@ -115,7 +118,7 @@
       width: 100%;
     }
   
-    #back-to-menu-from-instructions, #back-to-menu-from-scoreboard, #from-end-to-menu-button{
+    #back-to-menu-from-instructions, #back-to-menu-from-scoreboard, #back-to-menu-from-continue-screen, #from-end-to-menu-button{
       position: absolute;
       left: 0;
       top: 0;
@@ -155,4 +158,63 @@
       font-family: 'Shket';
       padding: 2vh 12vw 0 12vw;
       text-align: center;
+    }
+
+    .particleToLeft {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background-color: #3d9dd1;
+      border-radius: 50%;
+      opacity: 0;
+      animation: fly 1s forwards;
+    }
+
+    .particle {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background-color: #3d9dd1;
+
+      z-index: 0;
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translateY(-5px);
+      }
+      25% {
+        transform: translateY(5px);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+      75% {
+        transform: translateY(5px);
+      }
+      100% {
+        transform: translateY(-5px);
+      }
+    }
+
+    @keyframes flyRight {
+      0% {
+        opacity: 1;
+        transform: translateX(0px);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(calc(100px - var(--x, 0px))) translateY(calc(var(--y, 0px)));
+      }
+    }
+    
+    @keyframes flyLeft {
+      0% {
+        opacity: 1;
+        transform: translateX(0px);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(calc(-100px + var(--x, 0px))) translateY(calc(var(--y, 0px)));
+      }
     }

@@ -54,6 +54,38 @@
   background-color: blue;
 }
 
+.temp-clickable{
+  background-color: blue;
+  animation: tempClickable 1.5s ease-in-out forwards;
+}
+
+@keyframes tempClickable {
+  0% {
+    color: white;
+  }
+
+  29% {
+    color: white;
+  }
+
+  33% {
+    color: rgba(255, 255, 255, 0);
+  }
+
+  37% {
+    color: white;
+  }
+
+  66% { 
+    color: white;
+  }
+
+  100%{
+    color: #ffffff00;
+    animation: none;
+  }
+} 
+
 .succlicked{
   animation: indPosFade 1.5s ease-in-out forwards;
 }

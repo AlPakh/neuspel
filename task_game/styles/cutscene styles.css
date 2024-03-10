@@ -8,17 +8,62 @@
     text-align: center;
     background: transparent; /* Черный фон, если картинка не занимает весь экран */
   }
-  
-  #cutscene-image {
+
+  .cutscene-image, #cutscene-image-container {
+    position: absolute;
     max-width: 80%;
     height: 40vh;
+
+    display: inline-block;
+    
+    top: 10vh;
+    padding: 10px;
+    margin-bottom: 30px;
+
+    animation: spaceShipFly 4s infinite ease-in-out;
   }
+  
+  #cutscene-image {
+    height: 40vh;
+    max-width: 80%;
+    position: relative;
+
+    overflow: visible;
+
+    border: none;
+    background-color: transparent;
+
+    background-image: url('img/ship.png');
+    background-size: auto; 
+    background-position: center; /* центрирует изображение */
+    background-repeat: no-repeat; /* предотвращает повторение изображения */
+
+    z-index: 5;
+  }
+
+  @keyframes spaceShipFly {
+    0% {
+      transform: translateY(-10px);
+    }
+
+    50% { 
+      transform: translateY(10px);
+    }
+
+    100%{
+      transform: translateY(-10px);
+    }
+  } 
 
   .cut-text-container{
     margin-top: 20px;
     padding: 20px;
     background: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон для текста */
     user-select: none;
+
+    position: absolute;
+    top: 50vh;
+    margin-bottom: 20px;
   }
   
   .cutscene-text {
@@ -28,7 +73,7 @@
     color: #fff;
     cursor: pointer;
     width: 95vw;
-    font-size: calc(24px + 1vmax);
+    font-size: calc(24px + 1vmin);
     font-family: 'Shket';
   }
 

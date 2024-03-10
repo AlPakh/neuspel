@@ -62,6 +62,7 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
         }
 
         let panel;
+        let fakepanel;
 
         function handleKeyDown(e) {
             if (!panel) return; // Если panel не определен, выходим из функции
@@ -71,18 +72,22 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
                 const elapsed = (currentTime - activationTime) / 1000;
         
                 var difficultyNum = 1/parseFloat(levelSettings.clickTolerance, 10);
-                var timeDifference = Math.abs(elapsed);
+                var timeDelta = Math.abs(elapsed);
         
-                var diffScore = Math.floor((difficultyNum / timeDifference)*3000);
+                var diffScore = Math.floor((difficultyNum / timeDelta)*3000);
                 qteGameScore += diffScore;
                 refreshScore(diffScore, qteGameScore)
         
                 playSuccess();
         
                 panel.remove();
+                if(fakepanel){
+                    fakepanel.remove();    
+                }
+
                 clearTimeout(activationTimerId);
                 clearTimeout(finishTimerId);
-                if(timeLeft > levelSettings.indicatorTimeout.max){
+                if(timeLeft > levelSettings.timeExists.max){
                     activateTimer(); // Запуск нового таймера
                 }
             }
@@ -112,15 +117,37 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
                 panel.style.left = `${(Math.random() * (container.offsetWidth - 240))+120}px`; // Случайная позиция по X
                 panel.style.top = `${(Math.random() * (container.offsetHeight - 150)+75)}px`; // Случайная позиция по Y
 
-                console.log(panel.style.left + " " + panel.style.top);
-                console.log((container.offsetWidth - 50) + " " + ((container.offsetHeight - 150)+50));
+                //console.log(panel.style.left + " " + panel.style.top);
+                //console.log((container.offsetWidth - 50) + " " + ((container.offsetHeight - 150)+50));
 
                 if(currentLevel >= 2){
                     var animations = ["none", "moveClockwise1 5s linear infinite", "moveCounterclockwise1 5s linear infinite",
-                        "none", "moveClockwise2 5s linear infinite", "moveCounterclockwise2 5s linear infinite"
+                        "moveClockwise2 5s linear infinite", "moveCounterclockwise2 5s linear infinite",
+                        "moveClockwise3 5s linear infinite", "moveCounterclockwise3 5s linear infinite", 
+                        "moveClockwise4 5s linear infinite", "moveCounterclockwise4 5s linear infinite", 
                     ];
                     var randomAnimation = Math.floor(Math.random() * animations.length);
                     panel.style.animation = animations[randomAnimation];
+                }
+
+                if(currentLevel == 3){
+                    fakepanel = document.createElement('div');
+                    fakepanel.textContent = number+11; // Установка текста панельки
+                    fakepanel.classList.add('panel');
+                    fakepanel.classList.add('fakepanel');
+
+                    fakepanel.style.left = `${(Math.random() * (container.offsetWidth - 240))+120}px`; // Случайная позиция по X
+                    fakepanel.style.top = `${(Math.random() * (container.offsetHeight - 150)+75)}px`; // Случайная позиция по Y
+
+                    var animations = ["none", "moveClockwise1 5s linear infinite", "moveCounterclockwise1 5s linear infinite",
+                        "none", "moveClockwise2 5s linear infinite", "moveCounterclockwise2 5s linear infinite",
+                        "none", "moveClockwise3 5s linear infinite", "moveCounterclockwise3 5s linear infinite", 
+                        "none", "moveClockwise4 5s linear infinite", "moveCounterclockwise4 5s linear infinite"
+                    ];
+                    var randomAnimation = Math.floor(Math.random() * animations.length);
+
+                    fakepanel.style.animation = "fakeAnimation " + levelSettings.clickTolerance + "s linear infinite, " + animations[randomAnimation];
+                    container.appendChild(fakepanel);
                 }
 
                 panel.dataset.activationTime = Date.now(); // Записываем в свойства
@@ -143,6 +170,10 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
                     document.removeEventListener('keydown', handleKeyDown) //Здесь я хочу удалить событие нажатия на кнопку
                     
                     panel.remove();
+                    if(fakepanel){
+                        fakepanel.remove();    
+                    }
+
                     clearTimeout(activationTimerId);
                     clearTimeout(finishTimerId);
                     activateTimer(); // Запуск нового таймера
@@ -162,7 +193,7 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
 
         // Генерация случайного таймаута для индикатора в секундах
         function getRandomTimeoutSeconds() {
-            let timeout = levelSettings.indicatorTimeout;
+            let timeout = levelSettings.timeExists;
             return Math.floor(Math.random() * (timeout.max - timeout.min + 1) + timeout.min);
         }
 

@@ -1,6 +1,7 @@
 let currentTextIndex = 0;
 let currentCharIndex = 0;
 let timerChars;
+var indPartInerv;
 
 const cutsceneTexts = [
     "Вы сидите в кабине космического корабля",
@@ -8,13 +9,18 @@ const cutsceneTexts = [
     "Ваша задача выполнять задания на время",
 ];
 
-function showCutsceneText() {
+function showCutsceneText(partInrv) {
+    if(!partInrv){
+        indPartInerv = partInrv;
+    }
+
     document.getElementById("click-continue-text").textContent = ". . .";
+
     if (currentTextIndex < cutsceneTexts.length) {
         let text = cutsceneTexts[currentTextIndex];
         if (currentCharIndex < text.length) {
             document.getElementById("cutscene-text").textContent += text[currentCharIndex++];
-            timerChars = setTimeout(showCutsceneText, 60); // Скорость вывода текста здесь
+            timerChars = setTimeout(showCutsceneText(), 60); // Скорость вывода текста здесь
         }
         else
         {
@@ -23,7 +29,7 @@ function showCutsceneText() {
     }
 }
 
-function nextCutsceneText() {
+function nextCutsceneText(partInrv) {
     playSwitch();
     clearTimeout(timerChars); // Очищаем текущий таймер, если он есть
     if (currentCharIndex < cutsceneTexts[currentTextIndex].length) // Если текст ещё не закончил выводиться, выводим его полностью
@@ -47,6 +53,13 @@ function nextCutsceneText() {
         document.getElementById("cutscene-screen").style.display = 'none';
         currentTextIndex = 0;
         currentCharIndex = 0;
+
+        clearInterval(indPartInerv); // Останавливаем создание частиц
+        document.querySelectorAll(".particle").forEach(partcl => {
+            partcl.remove();
+            delete partcl;
+        });
+
         // Отобразить экран перехода к первому уровню
         startGame();
         document.getElementById("click-continue-text").textContent = ". . .";

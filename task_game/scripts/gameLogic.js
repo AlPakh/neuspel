@@ -5,9 +5,9 @@ async function startGame(lvl){
             ruName: 'Индикаторы', 
             message: 'На этом уровне надо следить за тремя индикаторами. Когда индикатор зажигается, на нём отображается время в секундах, через которое надо на него нажать', 
             settings: {
-                1: { duration: 30, indicatorTimeout: { min: 3, max: 5 }, indicatorDifference: { min: 2, max: 4 }, clickTolerance: 1, punishment: 5},
-                2: { duration: 20, indicatorTimeout: { min: 3, max: 5 }, indicatorDifference: { min: 2, max: 3 }, clickTolerance: 0.5, punishment: 4},
-                3: { duration: 15, indicatorTimeout: { min: 2, max: 3 }, indicatorDifference: { min: 2, max: 2 }, clickTolerance: 1, punishment: 3}
+                1: { duration: 25, timeExists: { min: 3, max: 5 }, timeWaits: { min: 2, max: 4 }, clickTolerance: 1, punishment: 5},
+                2: { duration: 20, timeExists: { min: 2, max: 4 }, timeWaits: { min: 2, max: 3 }, clickTolerance: 0.5, punishment: 4},
+                3: { duration: 15, timeExists: { min: 2, max: 3 }, timeWaits: { min: 2, max: 2 }, clickTolerance: 1, punishment: 3}
             }
         },
         {
@@ -15,32 +15,34 @@ async function startGame(lvl){
             ruName: 'QTE', 
             message: 'На этом уровне на экране появляются случайные клавиши с клавиатуры. Когда клавиша появляется на экране, нужно как можно быстрее нажать на соответствующую кнопку на клавиатуре', 
             settings: {
-                1: { duration: 20, indicatorTimeout: { min: 3, max: 3 }, clickTolerance: 2.5, punishment: 5},
-                2: { duration: 20, indicatorTimeout: { min: 2, max: 3 }, clickTolerance: 2, punishment: 4 },
-                3: { duration: 15, indicatorTimeout: { min: 1, max: 2 }, clickTolerance: 1.5, punishment: 3 }
+                1: { duration: 20, timeExists: { min: 3, max: 3 }, timeWaits: { min: 2, max: 2 }, clickTolerance: 2.5, punishment: 5},
+                2: { duration: 20, timeExists: { min: 2, max: 3 }, timeWaits: { min: 2, max: 2 }, clickTolerance: 2, punishment: 4 },
+                3: { duration: 15, timeExists: { min: 1, max: 2 }, timeWaits: { min: 2, max: 2 }, clickTolerance: 1.5, punishment: 3 }
             }
         }
     ];
 
+    var levelOfChallenge;
+
     if(!lvl){
-        var hardLevel = 1;
+        levelOfChallenge = 1;
     }
     else{
-        var hardLevel = lvl;
+        levelOfChallenge = lvl;
     }
     
     var gameFailed = false;
-    var globScore = 0;
+    var globalStoredScore = 0;
 
-    while(hardLevel < 4 && !gameFailed){
+    while(levelOfChallenge < 4 && !gameFailed){
         //Тут будут меняться уровни сложности
         var levelFinished = false;
         var gameToLaunchIndex = 0;
 
         // Обновить localStorage, если текущий уровень больше сохранённого
         const levelReached = lastUser.userdata.levelReached;
-        if (!levelReached || hardLevel > parseInt(levelReached, 10)) {
-            lastUser.userdata.levelReached = hardLevel;
+        if (!levelReached || levelOfChallenge > parseInt(levelReached, 10)) {
+            lastUser.userdata.levelReached = levelOfChallenge;
             changeUser(lastUser);
         }
 
@@ -62,58 +64,60 @@ async function startGame(lvl){
 
         while(!levelFinished && !gameFailed && gameToLaunchIndex < gamesOrder.length){
             //Тут будут меняться миниигры
-            var gameFinished = false;
+            var minigameFinished = false;
             var randomGame = gamesOrder[gameToLaunchIndex];
-            while(!gameFinished && !gameFailed){
+            while(!minigameFinished && !gameFailed){
                 //Здесь будет запускаться и проигрываться одна миниигра
                 var currRGame = games[randomGame];
-                await showTransitionScreen(hardLevel, currRGame.message, currRGame.ruName);
-                var cgameScore = 0;
+                await showTransitionScreen(levelOfChallenge, currRGame.message, currRGame.ruName);
+                var launchedMinigameScore = 0;
 
                 switch(randomGame){
                     case 0:
-                        var currGame = games[0]
-                        var currSetts = currGame.settings[hardLevel];
+                        var currGame = games[0];
+                        var currentMinigameSettings = currGame.settings[levelOfChallenge];
                         try{
-                            const result = await startIndicatorLevel(hardLevel, currSetts, globScore);
-                            cgameScore = result;
+                            const result = await startIndicatorLevel(levelOfChallenge, currentMinigameSettings, globalStoredScore);
+                            console.log("result = " + result);
+                            launchedMinigameScore = result;
+                            console.log("cgameScore = " + launchedMinigameScore);
                             break;
                         }
                         catch (error){
                             gameFailed = true;
-                            cgameScore = error;
+                            launchedMinigameScore = error;
                             break;
                         }
                     case 1:
-                        var currGame = games[1]
-                        var currSetts = currGame.settings[hardLevel];
+                        var currGame = games[1];
+                        var currentMinigameSettings = currGame.settings[levelOfChallenge];
                         try{
-                            const result = await startQTELevel(hardLevel, currSetts, globScore);
-                            cgameScore = result;
+                            const result = await startQTELevel(levelOfChallenge, currentMinigameSettings, globalStoredScore);
+                            launchedMinigameScore = result;
                             break;
                         }
                         catch (error){
                             gameFailed = true;
-                            cgameScore = error;
+                            launchedMinigameScore = error;
                             break;
                         }
                 }
                 
-                console.log('after level' + cgameScore);
-                globScore = cgameScore;
-                console.log('now global' + globScore);
-                gameFinished = true;
+                console.log('after level: ' + launchedMinigameScore);
+                globalStoredScore = launchedMinigameScore;
+                console.log('now global: ' + globalStoredScore);
+                minigameFinished = true;
             }
             gameToLaunchIndex++;
         }
-        hardLevel++;
+        levelOfChallenge++;
     }
 
     var afterGameUser = getCurrentUser();
     var maxGameScore = afterGameUser.userdata.maxGameScore;
     
-    if(!maxGameScore || maxGameScore < globScore){
-        lastUser.userdata.maxGameScore = globScore;
+    if(!maxGameScore || maxGameScore < globalStoredScore){
+        lastUser.userdata.maxGameScore = globalStoredScore;
         changeUser(lastUser);
     }
 
@@ -124,7 +128,7 @@ async function startGame(lvl){
     else{
         resText = "Конец игры!";
     }
-    await showEndScreen(resText, globScore);
+    await showEndScreen(resText, globalStoredScore);
 
 }
 

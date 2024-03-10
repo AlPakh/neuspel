@@ -1,6 +1,6 @@
 window.onresize = function (event) {
     var bWid = window.innerWidth < 624;
-    var bHei = window.innerHeight < 400;
+    var bHei = window.innerHeight < 450;
     if (bWid || bHei) {
         // Показываем предупреждение
         document.querySelector('.warning').style.display = 'flex';

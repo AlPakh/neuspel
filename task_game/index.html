@@ -91,12 +91,16 @@
                 <button class="main-menu-button" id="ng-button">Начать с начала</button>
                 <button class="main-menu-button" id="continue-button-2">Продолжить со 2-го уровня</button>
                 <button class="main-menu-button" id="continue-button-3">Продолжить с 3-го уровня</button>
+                
+                <button id="back-to-menu-from-continue-screen">Назад</button>
             </div>
 
             <!-- Катсцена в начале игры -->
             <div id="cutscene-screen" style="display:none;">
                 <button id="cutscene-skip-button">Пропустить</button>
-                <img id="cutscene-image" src="img/ship.png" alt="Катсцена" />
+                <div class="cutscene-image" id="cutscene-image-container">
+                    <img id="cutscene-image" src="img/ship.png" alt="Катсцена" />
+                </div>
                 <div class="cut-text-container" id="cut-text-container">
                     <div id="cutscene-text" class="cutscene-text"></div>
                     <div id="click-continue-text" class="cutscene-text" style="display: flex;"></div>
