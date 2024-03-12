@@ -19,6 +19,16 @@ async function startGame(lvl){
                 2: { duration: 20, timeExists: { min: 2, max: 3 }, timeWaits: { min: 2, max: 2 }, clickTolerance: 2, punishment: 4 },
                 3: { duration: 15, timeExists: { min: 1, max: 2 }, timeWaits: { min: 2, max: 2 }, clickTolerance: 1.5, punishment: 3 }
             }
+        },
+        {
+            name: 'clock', 
+            ruName: 'Часы', 
+            message: 'На этом уровне у вас будут большие часы с двумя стрелками и несколько маленьких. Вам необходимо поочерёдно ввести на больших часах время, указанное намаленьких', 
+            settings: {
+                1: { duration: 25, clockAmount: 3, angleDifference: 10, punishment: 5},
+                2: { duration: 20, clockAmount: 4, angleDifference: 7, punishment: 4 },
+                3: { duration: 25, clockAmount: 5, angleDifference: 7, punishment: 3 }
+            }
         }
     ];
 
@@ -48,7 +58,7 @@ async function startGame(lvl){
 
 
         //Получаем случайный порядок миниигр
-        var gameIndexes = [0, 1/*, 2*/];        //==================================================ДОБАВЛЯТЬ ПО МЕРЕ ГОТОВНОСТИ
+        var gameIndexes = [0, 1, 2];        //==================================================ДОБАВЛЯТЬ ПО МЕРЕ ГОТОВНОСТИ
         var gamesOrder = [];
         var n = gameIndexes.length
 
@@ -97,6 +107,20 @@ async function startGame(lvl){
                             break;
                         }
                         catch (error){
+                            gameFailed = true;
+                            launchedMinigameScore = error;
+                            break;
+                        }
+                    case 2:
+                        var currGame = games[2];
+                        var currentMinigameSettings = currGame.settings[levelOfChallenge];
+                        try {
+                            const result = await startClockLevel(levelOfChallenge, currentMinigameSettings, globalStoredScore);
+                            console.log("result = " + result);
+                            launchedMinigameScore = result;
+                            break;
+                        }
+                        catch (error) {
                             gameFailed = true;
                             launchedMinigameScore = error;
                             break;

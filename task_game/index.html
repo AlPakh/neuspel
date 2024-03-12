@@ -53,6 +53,7 @@
         <div class="content-div" id="content-div">
             <link rel="stylesheet" type="text/css" href="styles/indicator content styles.css">
             <link rel="stylesheet" type="text/css" href="styles/qte content styles.css">
+            <link rel="stylesheet" type="text/css" href="styles/clock content styles.css">
             <link rel="stylesheet" type="text/css" href="styles/menu styles.css">
             <link rel="stylesheet" type="text/css" href="styles/cutscene styles.css">
 
@@ -147,6 +148,35 @@
                 <div id="qte-score-difference" class="score-text score-difference">000000000000</div>
             </div>
 
+            <div id="clock-game-screen" style="display:none;">
+                <!-- Контейнер для динамически генерирующихся объектов -->
+                <div id="clock-game-objects-container">
+                    <div id="additional-clocks">
+
+                    </div>
+                    
+                    <div class="clock" id="mainClock">
+                        <div id="minuteHand" class="minuteHand hand"></div>
+                        <div id="hourHand" class="hourHand hand"></div>
+                        <div style="
+                            opacity: 1;
+                            z-index: 5;
+                            border-radius: 50%;
+                            position: absolute;
+                            width: 5px;
+                            height: 5px;
+                            background-color: #3d9dd1;
+                        "></div>
+                      </div>
+                </div>
+                
+                <!-- Текстовое поле для таймера обратного отсчёта -->
+                <div id="clock-countdown-timer">00:00</div>
+                
+                <div id="clock-score-text" class="score-text">000000000000</div>
+                <div id="clock-score-difference" class="score-text score-difference">000000000000</div>
+            </div>
+
             <div id="game-over-screen" style="display:none;">
                 <div id="game-results"></div>
                 <div id="total-game-score" style="white-space: pre-line">Счёт</div>
@@ -156,11 +186,12 @@
             <script src="scripts/gameLogic.js"></script>
             <script src="scripts/indicatorsLevel.js"></script>
             <script src="scripts/qteLevel.js"></script>
+            <script src="scripts/clocksLevel.js"></script>
         </div>
     
     </div>
 
-    <div class="warning" style="display: none; ">
+    <div class="warning" style="display: none; " style="z-index: 10;">
         Ваше окно браузера слишком маленькое. Пожалуйста, увеличьте его размер для лучшего просмотра.
     </div>
     <script src="scripts/onResize.js"></script>    

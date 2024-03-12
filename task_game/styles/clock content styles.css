@@ -1,0 +1,165 @@
+#clock-game-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    /* Распределение пространства вокруг дочерних элементов */
+    height: 100%;
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+    /* Убедитесь, что padding не изменяет размеры */
+}
+
+/* Контейнер для динамически генерирующихся объектов */
+#clock-game-objects-container {
+    position: relative;
+    flex-grow: 1;
+    width: 100%;
+    background-color: orange;
+
+    display: flex;
+    flex-direction: column;
+
+    cursor: default;
+
+    overflow: hidden;
+
+    align-items: center;
+    justify-content: center;
+}
+
+/* Текстовое поле для таймера обратного отсчёта */
+#clock-countdown-timer {
+    font-size: 2em;
+    /* Размер шрифта для таймера */
+    color: white;
+    background-color: brown;
+    /* Временный цвет для наглядности */
+    padding: 10px;
+    margin-top: 20px;
+    /* Отступ сверху */
+}
+
+.score-difference {
+    top: 0;
+    right: 0;
+    margin: calc(20px + 5px + 24px + 1vmax) 20px 0px 0px;
+    text-align: right;
+}
+
+.score-animation {
+    animation: scoreFade 2s ease-in-out forwards;
+}
+
+@keyframes scoreFade {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.scoreplus {
+    color: rgb(84, 210, 84);
+}
+
+.scoreminus {
+    color: rgb(210, 84, 84);
+}
+
+.clock {
+    position: relative;
+    width: 27vh;
+    height: 27vh;
+    margin: 2vmin;
+    background: 
+    radial-gradient(circle at center, #ffffff 60%, #00000000 60%, #00000000 75%),
+    conic-gradient(
+                        #696969 0%, #696969 1%, #ffffff 1%,
+                        #ffffff 7.3%, #696969 7.3%, #696969 9.3%, #ffffff 9.3%,
+                        #ffffff 15.6%, #696969 15.6%, #696969 17.5%, #ffffff 17.5%,
+                        #ffffff 24%, #696969 24%, #696969 26%, #ffffff 26%,
+                        #ffffff 32.3%, #696969 32.3%, #696969 34.2%, #ffffff 34.2%,
+                        #ffffff 40.6%, #696969 40.6%, #696969 42.5%, #ffffff 42.5%,
+                        #ffffff 49%, #696969 49%, #696969 51%, #ffffff 51%,
+                        #ffffff 57.3%, #696969 57.3%, #696969 59.2%, #ffffff 59.2%,
+                        #ffffff 65.6%, #696969 65.6%, #696969 67.5%, #ffffff 67.5%,
+                        #ffffff 74%, #696969 74%, #696969 76%, #ffffff 76%,
+                        #ffffff 82.3%, #696969 82.2%, #696969 84.2%, #ffffff 84.2%,
+                        #ffffff 90.6%, #696969 90.6%, #696969 92.5%, #ffffff 92.5%,
+                        #ffffff 99%, #696969 99%, #696969 100%, #ffffff 100%
+                );
+
+    background-size: cover;
+
+    border-radius: 50%;
+    border: 1vh solid rgb(42, 42, 42);
+
+    display: grid;
+
+    align-items: center;
+    justify-items: center;
+
+    align-self: center;
+    justify-self: center;
+
+    z-index: 0;
+}
+
+#additional-clocks {
+    height: 9vh;
+    display: flex;
+    flex-direction: row;
+    /* flex-shrink: 1; */
+    /* justify-items: center; */
+    margin: 1vh 5vh 1vh 5vh;
+}
+
+.littleClock{
+    transform: scale(0.3);
+    margin: 1vh 5vh 1vh 5vh;
+    cursor: not-allowed;
+}
+
+.hand {
+    position: absolute;
+    background-color: black;
+    border-radius: 30%;
+    z-index: 1;
+
+    cursor: grab;
+
+    transform-origin: 50% 100%;
+
+    transform: translate(-50%, -100%);
+
+
+    /* Выравнивание стрелки так, чтобы её нижняя часть находилась в центре циферблата */
+    bottom: 50%;
+    /* или 50px, если циферблат имеет фиксированную высоту */
+
+    /* Чтобы компенсировать смещение из-за ширины стрелки, можно добавить: */
+}
+
+.hourHand {
+    width: 2.5vh;
+    height: 7.5vh;
+    clip-path: polygon(40% 0%, 60% 0%, 100% 70%, 60% 100%, 40% 100%, 0% 70%);
+    transform: rotate(0deg);
+    background: linear-gradient(0.25turn, #482020 50%, #893939 50%, #482020 70%);
+}
+
+.minuteHand {
+    width: 1.9vh;
+    height: 12vh;
+    clip-path: polygon(40% 0%, 60% 0%, 100% 70%, 60% 100%, 40% 100%, 0% 70%);
+    transform: rotate(0deg);
+    background: linear-gradient(0.25turn, #000 50%, #5f5f5f 50%, #000 70%);
+}
