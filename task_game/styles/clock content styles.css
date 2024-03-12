@@ -114,17 +114,20 @@
 }
 
 #additional-clocks {
-    height: 9vh;
+    height: 11vh;
     display: flex;
     flex-direction: row;
     /* flex-shrink: 1; */
     /* justify-items: center; */
     margin: 1vh 5vh 1vh 5vh;
+    background-color: rgba(38, 38, 38, 0.2);
+
+    border: 2px rgba(38, 38, 38, 0.69) solid;
 }
 
 .littleClock{
     transform: scale(0.3);
-    margin: 1vh 5vh 1vh 5vh;
+    margin: 2vh 5vh 2vh 5vh;
     cursor: not-allowed;
 }
 

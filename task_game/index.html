@@ -76,7 +76,7 @@
                         <div class="instruction-menu-text" id="instruction-page-indicator">● ○ ○</div>
                     </div>
                     <button class="instruction-nav-btn" id="next-instruction">&#8680;</button>
-                    <button id="back-to-menu-from-instructions">Назад</button>
+                    <button id="back-to-menu-from-instructions"  class="back-to-menu-from">Назад</button>
                 </div>
                 <script src="scripts/instructionMenu.js"></script>
             </div>
@@ -84,7 +84,7 @@
             <!-- Экран таблицы результатов -->
             <link rel="stylesheet" type="text/css" href="styles/scoreboard styles.css">
             <div id="scoreboard-screen" style="display:none;">
-                <button id="back-to-menu-from-scoreboard">Назад</button>
+                <button id="back-to-menu-from-scoreboard"  class="back-to-menu-from">Назад</button>
                 <script src="scripts/scoreboard.js"></script>
             </div>
 
@@ -94,7 +94,7 @@
                 <button class="main-menu-button" id="continue-button-2">Продолжить со 2-го уровня</button>
                 <button class="main-menu-button" id="continue-button-3">Продолжить с 3-го уровня</button>
                 
-                <button id="back-to-menu-from-continue-screen">Назад</button>
+                <button id="back-to-menu-from-continue-screen"  class="back-to-menu-from">Назад</button>
             </div>
 
             <!-- Катсцена в начале игры -->
@@ -134,6 +134,7 @@
                 
                 <div id="indicator-score-text" class="score-text">000000000000</div>
                 <div id="indicator-score-difference" class="score-text score-difference">000000000000</div>
+                <button id="back-to-menu-from-indicator" class="back-to-menu-from">Выйти</button>
             </div>
 
             <div id="qte-game-screen" style="display:none;">
@@ -146,6 +147,7 @@
                 
                 <div id="qte-score-text" class="score-text">000000000000</div>
                 <div id="qte-score-difference" class="score-text score-difference">000000000000</div>
+                <button id="back-to-menu-from-qte" class="back-to-menu-from">Выйти</button>
             </div>
 
             <div id="clock-game-screen" style="display:none;">
@@ -175,6 +177,7 @@
                 
                 <div id="clock-score-text" class="score-text">000000000000</div>
                 <div id="clock-score-difference" class="score-text score-difference">000000000000</div>
+                <button id="back-to-menu-from-clock"  class="back-to-menu-from">Выйти</button>
             </div>
 
             <div id="game-over-screen" style="display:none;">

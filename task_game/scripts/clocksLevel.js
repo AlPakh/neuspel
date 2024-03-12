@@ -9,8 +9,13 @@ async function startClockLevel(hardLevel, levelSettings, globScore){
             ClockScoreDifference: document.getElementById("clock-score-difference"),
             AdditionalClocksContainer: document.getElementById("additional-clocks"),
             mainHourHand: document.getElementById("hourHand"),
-            mainMinuteHand: document.getElementById("minuteHand")
+            mainMinuteHand: document.getElementById("minuteHand"),
+            ToMenuButton: document.getElementById("back-to-menu-from-clock")
         }
+        
+        docEls.ToMenuButton.addEventListener("click", function() {
+            endLevel(500);
+        });
 
         var gameDOWNTimer; //Таймер, раз в секунду обновляющий счётчик
         var timeLeft = levelSettings.duration; //Счётчик на таймере
@@ -267,7 +272,7 @@ async function startClockLevel(hardLevel, levelSettings, globScore){
         
 
         // Завершение уровня
-        async function endLevel() {
+        async function endLevel(rejectCode) {
             //alert('Уровень ' + currentLevel + ' пройден!');
             timeLeft = 0;
 
@@ -292,7 +297,14 @@ async function startClockLevel(hardLevel, levelSettings, globScore){
 
             setTimeout(() => {
                 docEls.ClockGameScreen.style.display = "none";
-                resolve(clockGameScore);
+                
+                if(!rejectCode){
+                    resolve(clockGameScore);
+                }
+                else{
+                    reject(clockGameScore);
+                }
+
                 console.log('clock success' + clockGameScore);
 
                 clockGameScore = 0;

@@ -6,8 +6,13 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
             CountdownTimer:  document.getElementById("qte-countdown-timer"),
             QTEGameScreen : document.getElementById("qte-game-screen"),
             QTEScoreText: document.getElementById("qte-score-text"),
-            QTEScoreDifference: document.getElementById("qte-score-difference")
+            QTEScoreDifference: document.getElementById("qte-score-difference"),
+            ToMenuButton: document.getElementById("back-to-menu-from-qte")
         }
+        
+        docEls.ToMenuButton.addEventListener("click", function() {
+            endLevel(500);
+        });
 
         var gameDOWNTimer; //Таймер, раз в секунду обновляющий счётчик
         var timeLeft = levelSettings.duration; //Счётчик на таймере
@@ -198,7 +203,7 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
         }
 
         // Завершение уровня
-        async function endLevel() {
+        async function endLevel(rejectCode) {
             //alert('Уровень ' + currentLevel + ' пройден!');
             timeLeft = 0;
 
@@ -221,7 +226,14 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
 
             setTimeout(() => {
                 docEls.QTEGameScreen.style.display = "none";
-                resolve(qteGameScore);
+                
+                if(!rejectCode){
+                    resolve(qteGameScore);
+                }
+                else{
+                    reject(qteGameScore);
+                }
+
                 console.log('qte success' + qteGameScore);
 
                 qteGameScore = 0;
@@ -252,7 +264,7 @@ async function startQTELevel(hardLevel, levelSettings, globScore){
             docEls.QTEScoreDifference.offsetHeight;
             docEls.QTEScoreDifference.classList.add('score-animation');
         }
-
+        
     });
 }
 

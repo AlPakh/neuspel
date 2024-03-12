@@ -130,11 +130,11 @@
       object-fit: contain;
     }
   
-    #back-to-menu-from-instructions, #back-to-menu-from-scoreboard, #back-to-menu-from-continue-screen, #from-end-to-menu-button{
+    .back-to-menu-from, #from-end-to-menu-button{
       position: absolute;
       left: 0;
       top: 0;
-      margin: 10px;
+      margin: 30px;
       color: white;
       border-color: white;
       font-size: calc(24px + 1vmax);
@@ -142,7 +142,7 @@
       border-width: 3px;
       border-radius: 10%;
   
-      background-color: transparent;
+      background-color: #00000087;
     }
 
     #continue-screen{

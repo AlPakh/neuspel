@@ -8,8 +8,12 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
             IndicatorGameScreen : document.getElementById("indicator-game-screen"),
             IndicatorScoreText: document.getElementById("indicator-score-text"),
             IndicatorScoreDifference: document.getElementById("indicator-score-difference"),
-            //IndicatorGameScreen: document.getElementById("indicator-game-objects-container")
+            ToMenuButton: document.getElementById("back-to-menu-from-indicator")
         }
+        
+        docEls.ToMenuButton.addEventListener("click", function() {
+            endLevel(500);
+        });
 
         var gameDOWNTimer; //Таймер, раз в секунду обновляющий счётчик
         var timeLeft = lvlSetts.duration; //Счётчик на таймере
@@ -47,6 +51,8 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
         console.log(lvlSetts);
 
         activateIndicator(currentLevel, lvlSetts); // Активируем первый индикатор
+
+        
         
         // Инициализация индикаторов
         function initIndicators() {
@@ -308,7 +314,7 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
         }
 
         // Завершение уровня
-        async function endLevel() {
+        async function endLevel(rejectCode) {
             //alert('Уровень ' + currentLevel + ' пройден!');
             timeLeft = 0;
 
@@ -355,7 +361,12 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
                 docEls.IndicatorScoreDifference.classList.remove('scoreminus');
 
                 console.log("resolve("+returnScore+")");
-                resolve(returnScore);
+                if(!rejectCode){
+                    resolve(returnScore);
+                }
+                else{
+                    reject(returnScore);
+                }
             }, 2000);
         }
 
@@ -382,7 +393,7 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
             docEls.IndicatorScoreDifference.offsetHeight;
             docEls.IndicatorScoreDifference.classList.add('score-animation');
         }
-
+        
     });
 }
 

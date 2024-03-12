@@ -147,7 +147,7 @@ async function startGame(lvl){
 
     var resText = '';
     if(gameFailed){
-        resText = "Что-то сломалось";
+        resText = "Полёт прерван";
     }
     else{
         resText = "Конец игры!";
