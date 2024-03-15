@@ -129,7 +129,16 @@ async function startIndicatorLevel(hardLevel, levelSettings, globScore){
         }
 
         function getLvlScore(){
-            return parseInt(docEls.IndicatorScoreText.textContent, 10);
+            var shownScoreString = docEls.IndicatorScoreText.textContent;
+            var shownScoreInt;
+            if(shownScoreString.includes("Infinity")) //Если в игре был идеальный клик, в значении будет Infinity
+            {
+                shownScoreInt = Number.MAX_SAFE_INTEGER;
+            }
+            else{
+                shownScoreInt =  parseInt(shownScoreString, 10)
+            }
+            return shownScoreInt;
         }
 
         // Функция для активации одного случайного индикатора

@@ -20,6 +20,7 @@ async function startClockLevel(hardLevel, levelSettings, globScore){
         var gameDOWNTimer; //Таймер, раз в секунду обновляющий счётчик
         var timeLeft = levelSettings.duration; //Счётчик на таймере
         docEls.CountdownTimer.textContent = formatTime(timeLeft);
+        docEls.AdditionalClocksContainer.style.opacity = "1";
         
         if(!globScore){
             var clockGameScore = 0; 
@@ -151,6 +152,7 @@ async function startClockLevel(hardLevel, levelSettings, globScore){
 
             if(foundValue || foundValue == 0){
                 clockValues[foundValue][2].style.opacity = "0";
+                docEls.AdditionalClocksContainer.removeChild(clockValues[foundValue][2]);
                 clockValues.splice(foundValue, 1);
                 
                 playSuccess();
@@ -291,6 +293,8 @@ async function startClockLevel(hardLevel, levelSettings, globScore){
                 delete lClock.dataset;
                 docEls.AdditionalClocksContainer.removeChild(lClock);
             });
+            
+            docEls.AdditionalClocksContainer.style.opacity = "0";
 
             document.getElementById("additional-clocks").innerHTML = "";
 

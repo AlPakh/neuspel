@@ -56,9 +56,10 @@ function changeNameButtonPressed(){
 
         newUser(parseName);
         changeNameButton.textContent = 'Изменить имя';
-        changeNameButton.dataset.mode = 'off';
-        changeNameButton.classList.add('unavailable-button');
 
+        lastUser = getCurrentUser();
+        
+        setCangeNameButton();
     }
 }
 
