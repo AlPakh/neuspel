@@ -196,6 +196,8 @@ async function showEndScreen(finText, globScore) {
         document.getElementById("game-results").textContent = finText;
         var endUser = getCurrentUser();
         document.getElementById("total-game-score").textContent = 'Счёт: ' + globScore + '\r\nРекорд: ' + endUser.userdata.maxGameScore;
+
+        setCangeNameButton()
         
         document.getElementById("from-end-to-menu-button").onclick = function(){
             playSwitch();
