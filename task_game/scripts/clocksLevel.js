@@ -162,6 +162,7 @@ async function startClockLevel(hardLevel, levelSettings, globScore){
                 
                 console.log(`${hourDifference} ${hourDifference}`);
 
+                timeLeft+=2;
 
                 var diffScore = Math.floor(levelSettings.punishment*100*(angleDelta*2-Math.abs(hourDifference)-Math.abs(minuteDifference)));
                 clockGameScore += diffScore;

@@ -10,6 +10,20 @@ else{
     changeNameButton.addEventListener("click", changeNameButtonPressed);
 }
 
+
+function setCangeNameButton(){
+   if(parseInt(lastUser.userdata.levelReached, 10) == 0 && lastUser.userdata.firstLaunch == 'false'){
+        document.getElementById('change-name').dataset.mode = 'off';
+        document.getElementById('change-name').classList.add('unavailable-button');
+    }
+    else{
+        document.getElementById('change-name').dataset.mode = 'off';
+        document.getElementById('change-name').classList.remove('unavailable-button');
+    } 
+}
+
+window.onload = (event) => {    setCangeNameButton();   } 
+
 //Сохранение имени нового пользователя
 function changeNameButtonPressed(){
     var changeNameButton = document.getElementById('change-name');
@@ -43,6 +57,8 @@ function changeNameButtonPressed(){
         newUser(parseName);
         changeNameButton.textContent = 'Изменить имя';
         changeNameButton.dataset.mode = 'off';
+        changeNameButton.classList.add('unavailable-button');
+
     }
 }
 
@@ -229,12 +245,13 @@ function createParticles(e) {
             particle.style.setProperty('--x', `${(Math.random() - 0.5) * 40}px`);
             particle.style.setProperty('--y', `${(Math.random() - 0.5) * 30}px`);
 
-            button.appendChild(particle);
-
             // Удаляем частицу после анимации
             particle.addEventListener('animationend', function () {
                 particle.remove();
+                delete particle;
             });
+
+            button.appendChild(particle);
         }
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
@@ -245,12 +262,13 @@ function createParticles(e) {
             particle.style.setProperty('--x', `${(Math.random() - 0.5) * 40}px`);
             particle.style.setProperty('--y', `${(Math.random() - 0.5) * 30}px`);
 
-            button.appendChild(particle);
-
             // Удаляем частицу после анимации
             particle.addEventListener('animationend', function () {
                 particle.remove();
+                delete particle;
             });
+
+            button.appendChild(particle);
         }
 
     }, 100); // частота создания частиц

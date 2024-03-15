@@ -1,4 +1,5 @@
 async function startGame(lvl){
+    lastUser = getCurrentUser();
     var games = [
         {
             name: 'indicators',
@@ -200,6 +201,8 @@ async function showEndScreen(finText, globScore) {
             playSwitch();
             document.getElementById("game-over-screen").style.display = "none";
             document.getElementById("main-menu").style.display = "flex";
+
+            setCangeNameButton();
             resolve();
         };
     });
