@@ -1,0 +1,132 @@
+form{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 80vw;
+    height: auto;
+    background-color: white;
+    font-size: calc(11px + 1vh);
+    font-family: Arial, Helvetica, sans-serif;
+
+    padding: 15px;
+    
+    align-items: center;
+    justify-content: center;
+}
+
+.button{
+    justify-content: center;
+    
+    padding: 5px;
+    border-radius: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    
+    background-color: white;
+    font-size: calc(11px + 1vh);
+}
+
+.radioLabel, .checkLabel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:  0 2vh 0 0;
+}
+
+.radioLabel {
+    height: calc(11px + 1vh);
+    width: calc(11px + 1vh);
+    border-radius: 50%;
+    border: 1px solid #000;
+    background: #fff;
+    background-size: cover;
+    cursor: pointer;
+    opacity: 0;
+}
+
+ .radioLabel input[type="radio"] {
+     /*Скрытие стандартных радио-кнопок */
+     display: none;
+ }
+ 
+ .custom-radio {
+    display: inline-block;
+    width: calc(11px + 1vh);
+    height: calc(11px + 1vh);
+    border-radius: 50%;
+    margin-right: 10px; /* Расстояние между кастомным радио и текстом */
+    border: 1px solid #000;
+    cursor: pointer;
+    background: white;
+    background-size: cover;
+}
+
+.radioLabel .custom-radio {
+    display: inline-block;
+    width: calc(11px + 1vh);
+    height: calc(11px + 1vh);
+    border-radius: 50%;
+    margin-right: 10px; /* Расстояние между кастомным радио и текстом */
+    background: white;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+#oreh:checked + .custom-radio {
+    background-image: url('img/орех.png');
+}
+
+#dub:checked + .custom-radio {
+    background-image: url('img/дуб.png');
+}
+
+#pali:checked + .custom-radio {
+    background-image: url('img/палисандр.png');
+}
+
+#eben:checked + .custom-radio {
+    background-image: url('img/эбен.png');
+}
+
+#klen:checked + .custom-radio {
+    background-image: url('img/клен.png');
+}
+
+#listv:checked + .custom-radio {
+    background-image: url('img/лиственница.png');
+}
+
+#Tsvet, #Mebel, #Kolvo{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+} 
+
+fieldset{
+    border: none;
+    border-color: none;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin: 0 2vw 1vh 0;
+}
+
+.textLabel {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin:  0 0 1vh 0;
+}
+
+#lowerGrid
+{
+    display: flex; flex-direction: row;
+}
+
+#innerGrid
+{
+    display: flex; flex-direction: row;
+}

@@ -33,6 +33,7 @@
                     <a href="task_dop/index.html">Пазл (доп.)</a>
                     <a href="task_php/world.php">Привет, PHP</a>
                     <a href="task_mebel/index.php">Мебель</a>
+                    <a href="task_naklad/index.php">Орех</a>
                 </div>
             </div>
         </div>
