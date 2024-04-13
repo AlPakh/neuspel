@@ -1,0 +1,7 @@
+{
+    "name": "sasha/task_naklad",
+    "require": {
+        "phpoffice/phpspreadsheet": "^2.0",
+        "mpdf/mpdf": "^8.2"
+    }
+}

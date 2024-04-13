@@ -32,7 +32,9 @@
                     <a href="../task_dom/index.html">DOM-тест</a>
                     <a href="../task_dop/index.html">Пазл (доп.)</a>
                     <a href="../task_php/world.php">Привет, PHP</a>
-                    <a href="index.php">Мебель</a>
+                    <a href="../task_mebel/index.php">Мебель</a>
+                    <a href="index.php">Орех</a>
+                    <a href="../task_voucher/index.php">Ваучер</a>
                 </div>
             </div>
         </div>
@@ -134,10 +136,14 @@
 
 
                 <?php
-                require './vendor/autoload.php';
+                    require_once 'vendor/autoload.php';
 
-                use PhpOffice\PhpSpreadsheet\Spreadsheet;
-                use PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf;
+                    use PhpOffice\PhpSpreadsheet\Spreadsheet;
+                    use PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf;
+                    use PhpOffice\PhpSpreadsheet\IOFactory;
+                    use PhpOffice\PhpSpreadsheet\Cell\DataType;
+
+                    //ob_start();
 
                     if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $file = $_FILES['price_file'];
@@ -145,15 +151,14 @@
                         $filePath = $file['tmp_name'];
                         $prices = [];
 
-                        // Читаем содержимое файла построчно
+                        // Читаем содержимое файла
                         $fileHandle = fopen($filePath, "r");
                         if ($fileHandle) {
-                            // Чтение и игнорирование первой строки с заголовком
-                            fgets($fileHandle);
+                            fgets($fileHandle);   //  первая строка
 
                             while (($line = fgets($fileHandle)) !== false) {
-                                $data = explode("\t", $line);  // Разделяем строку и сохраняем в массив
-                                $prices[$data[0]] = intval($data[1]); // Конвертируем цену в целое число
+                                $data = explode("\t", $line);
+                                $prices[$data[0]] = intval($data[1]);
                             }
                             fclose($fileHandle);
                         }
@@ -166,6 +171,15 @@
                             'Эбеновое дерево' => 1.4,
                             'Клен' => 1.5,
                             'Лиственница' => 1.6
+                        ];
+
+                        $colorImage = [
+                            'Орех' => 'D:\OSPanel\domains\neuspel\task_naklad\img\орех',
+                            'Дуб мореный' => 'D:\OSPanel\domains\neuspel\task_naklad\img\дуб',
+                            'Палисандр' => 'D:\OSPanel\domains\neuspel\task_naklad\img\палисандр',
+                            'Эбеновое дерево' => 'D:\OSPanel\domains\neuspel\task_naklad\img\эбен',
+                            'Клен' => 'D:\OSPanel\domains\neuspel\task_naklad\img\клен',
+                            'Лиственница' => 'D:\OSPanel\domains\neuspel\task_naklad\img\лиственница'
                         ];
 
                         // Получаем данные из формы
@@ -188,16 +202,21 @@
                             'Стол' => 'quantity_stol',
                         ];
 
-                        // Рассчитываем стоимость заказа
+                        $items = [];
+
                         $totalCost = 0;
                         foreach ($selectedFurniture as $furnitureItem) {
 
-                            if (isset ($mapping[$furnitureItem])) {    // существует соответствие для данного предмета мебели
+                            if (isset ($mapping[$furnitureItem])) {
                                 $quantityFieldName = $mapping[$furnitureItem];
 
                                 $quantity = $_POST[$quantityFieldName] ?? 0;
                                 $price = $prices[$furnitureItem] ?? 0;
+
+                                $items[$furnitureItem] = ['quantity' => $quantity, 'price' => $price];
+
                                 $price *= $colorMarkup[$selectedColor] ?? 1.0;
+
 
                                 $totalCost += $price * $quantity;
 
@@ -205,7 +224,7 @@
                             }
                         }
 
-                        echo "<strong>Стоимость вашего заказа: $totalCost</strong>";
+//echo print_r($items);
 
                         $documentContent = "Стоимость вашего заказа: $totalCost\n";
                         $documentContent .= "Выбранный цвет мебели: $selectedColor\n";
@@ -213,75 +232,231 @@
 
 
                         // // Сохраняем документ
-                        // $documentFileName = "order_details_" . date("Y-m-d") . ".txt"; // Пример названия файла: order_details_2024-03-15.txt
-                        // file_put_contents($documentFileName, $documentContent);
+                         //$documentFileName = "order_details_" . date("Y-m-d") . ".txt"; // Пример названия файла: order_details_2024-03-15.txt
+                         //file_put_contents($documentFileName, $documentContent);
                     
                         // echo "<p><a href='$documentFileName'>Скачать документ с информацией о заказе</a></p>";
                     
 
-
-                        
-                        // Создаем новый Spreadsheet объект
+//========================
+                    
                         $spreadsheet = new Spreadsheet();
 
-                        // Получаем активный лист
-                        $sheet = $spreadsheet->getActiveSheet();
+                        $sheet = $spreadsheet->getActiveSheet();// Получаем активный лист
 
-                        // Заполняем лист данными
-                        $sheet->setCellValue('A1', 'Hello World !');
+                        $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
+                        $spreadsheet->getDefaultStyle()->getFont()->setSize(24);
+                        $sheet->getColumnDimension('A')->setWidth(50);
+                        $sheet->getColumnDimension('B')->setWidth(30);
 
-                        // Настройки для сохранения PDF
+                        $invoiceNumber = random_int(1000, 9999);
+
+                        //ВЕРХНЯЯ ЧАСТЬ
+                        $drawing = new PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                        $drawing->setName('Штрих');
+                        $drawing->setDescription('Штрих');
+                        $drawing->setPath('D:\OSPanel\domains\neuspel\task_naklad\img\штрих.JPG');
+                        $drawing->setHeight(120); // Высота в пикселях
+                        $drawing->setCoordinates("A1"); 
+                        $sheet->getStyle("A1")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+                        $sheet->getStyle("A1")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+                        $drawing->setWorksheet($sheet);
+                        $sheet->getRowDimension('1')->setRowHeight(150); 
+
+                        $sheet->mergeCells("A2:B2");
+                        $sheet->setCellValue('A2', 'Накладная № ' . $invoiceNumber);
+                        $sheet->getStyle('A2')->getFont()->setBold(true);
+                        $sheet->getStyle('A2')->getFont()->setSize(54);
+
+                        $sheet->mergeCells("A3:B3");
+                        $sheet->setCellValue('A3', 'Адрес получения заказа: ' . $_POST['address']);
+
+                        $sheet->mergeCells("A4:B4");
+                        $sheet->setCellValue('A4', 'Дата получения заказа: ' . $_POST['date']);
+
+                        $sheet->getStyle('A2:A4')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+
+
+                        //ТАБЛИЦА
+                        $sheet->getStyle('A6')->getAlignment()->setWrapText(true);
+                        $sheet->getStyle('A6')->getFont()->setSize(24);
+                        $textLines = [];
+                        $noNatsPrice = 0;
+
+                        $minLine = 6;
+                        $startLine = 6;
+                        foreach ($items as $item => $details) {
+                            $textLine = "•" .  $item . " ". $details['quantity'] . "шт - " . ($details['price'] * $details['quantity']) . "р";
+                            $noNatsPrice += $details['price'] * $details['quantity'];
+
+                            $sheet->setCellValue("A$startLine", $textLine);
+                            $sheet->getStyle("A$startLine")->getAlignment()->setWrapText(true);
+                            $sheet->getStyle("A$startLine")->getFont()->setSize(24);
+                            $sheet->getRowDimension($startLine)->setRowHeight(40); 
+                            $sheet->getStyle("B$minLine")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                            $startLine++;
+                        }
+
+                        $sheet->mergeCells("B$minLine:B$startLine");
+
+                        $sheet->setCellValue("B$minLine", "Сумма: " . $noNatsPrice);
+                        $sheet->getStyle("B$minLine")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);                        
+                        
+                        $sheet->setCellValue('A' . $startLine+1, 'Цвет: ' . $selectedColor . ", наценка " . $colorMarkup[$selectedColor]);
+
+                        $sheet->setCellValue("B" . $startLine+1 , '');
+                        $drawing = new PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                        $drawing->setName('Цвет');
+                        $drawing->setDescription('Цвет');
+                        $drawing->setPath($colorImage[$selectedColor] . '.png');
+                        $drawing->setHeight(70);
+                        $drawing->setCoordinates("B" . $startLine+1 ); 
+                        $sheet->getStyle("B" . $startLine+1 )->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                        $drawing->setWorksheet($sheet);
+
+                        $sheet->getStyle("A$minLine:B" . $startLine+1)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+                        $sheet->getRowDimension($startLine+1)->setRowHeight(80); 
+                        $styleArray = [
+                            'borders' => [
+                                'allBorders' => [
+                                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                    'color' => ['argb' => '000000'],
+                                ],
+                            ],
+                        ];
+
+                        $sheet->setCellValue("A" . $startLine+2, 'Итого:');
+                        $sheet->setCellValue("B" . $startLine+2, $totalCost);
+                        $sheet->getStyle("A" . $startLine+2 .":B" . $startLine+2)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+                        $sheet->getStyle("A" . $startLine+2 .":B" . $startLine+2)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                        $sheet->getStyle("A" . $startLine+2 .":B" . $startLine+2)->getFont()->setBold(true);
+                        
+                        $sheet->getRowDimension($startLine+2)->setRowHeight(40); 
+
+                        $sheet->getStyle("B" . $minLine .":B" . $startLine+2)->applyFromArray($styleArray);
+                        $sheet->getStyle("A" . $startLine+1 .":A" . $startLine+2)->applyFromArray($styleArray);
+
+                        if ($minLine != $startLine) {
+                            $TopCell = [
+                                'borders' => [
+                                    'top' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => '00000'],
+                                    ],
+                                    'left' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => '00000'],
+                                    ],
+                                    'right' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => '000000'],
+                                    ],
+                                    'bottom' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => 'ffffff'],
+                                    ]
+                                ],
+                            ];
+
+                            $MidCell = [
+                                'borders' => [
+                                    'top' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => 'ffffff'],
+                                    ],
+                                    'left' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => '000000'],
+                                    ],
+                                    'right' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => '000000'],
+                                    ],
+                                    'bottom' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => 'ffffff'],
+                                    ]
+                                ],
+                            ];
+
+                            $EndCell = [
+                                'borders' => [
+                                    'top' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => 'ffffff'],
+                                    ],
+                                    'left' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => '000000'],
+                                    ],
+                                    'right' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => '000000'],
+                                    ],
+                                    'bottom' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                        'color' => ['argb' => '000000'],
+                                    ]
+                                ],
+                            ];
+                            
+                            $sheet->getStyle("A" . $minLine . ":A" . $startLine)->applyFromArray($MidCell);
+                            $sheet->getStyle("A" . $minLine)->applyFromArray($TopCell);
+                            $sheet->getStyle("A" . $startLine)->applyFromArray($EndCell);
+                        }
+                        else{
+                            $sheet->getStyle("A" . $minLine . ":A" . $startLine)->applyFromArray($styleArray);
+                        }
+
+                        //НИЖНЯЯ ЧАСТЬ
+                        $sheet->mergeCells("A" . $startLine+3 .":B" . $startLine+3);
+                        $sheet->setCellValue("A" . $startLine+3, 'Всего наименований ' . count($items) . " на сумму " . $totalCost . ",00");
+                        $sheet->getStyle("A" . $startLine+3)->getFont()->setBold(true);
+
+                        $sheet->getRowDimension($startLine+3)->setRowHeight(40); 
+                        $sheet->getStyle("A" . $startLine+3 .":B" . $startLine+3)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_BOTTOM);
+
+                        $filegarant = "Гарантийное обслуживание.txt";
+                        $content = file_get_contents($filegarant);
+                        $lines = explode("\n", $content);
+
+                        $currentLetter = 'A'; //нумерация
+
+                        $currentRow = $startLine+5;
+                        foreach ($lines as $line) {
+                            $sheet->mergeCells("A$currentRow:B$currentRow");
+                            $line = preg_replace_callback('/^\d+\.\t/', function () use (&$currentLetter) {// Заменяем цифровую нумерацию на буквы
+                                return $currentLetter++ . ".\t";
+                            }, $line);
+                            
+                            $sheet->setCellValue("A$currentRow", $line);
+                            $sheet->getStyle("A$currentRow")->getAlignment()->setWrapText(true);
+                            $sheet->getStyle("A$currentRow")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_JUSTIFY);
+                            
+                            $currentRow++;
+                        }
+                        $sheet->getStyle('A' . $startLine+5)->getFont()->setBold(true); //Информация о гарантийном обслуживании:
+                        $sheet->getStyle('A' . $startLine+5)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                        
+
+
                         $writer = new Mpdf($spreadsheet);
-
-                        // Укажите путь куда сохранять PDF
-                        $filePath = 'hello_world.pdf';
-
-                        // Сохраняем файл
-                        $writer->save($filePath);
-
-                }
-
-
+                        $fileName = "Документ_на_выдачу_$invoiceNumber.pdf";
+                        $writer->writeAllSheets();
+                        $writer->save($fileName);
+                    }
                     ?>
-
+                
                 </div>
             </form>
         </div>
 
     </div>
 
-    
-
 
     <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-    
-    <script>
-    Сохранение данных формы
-        var postData = <?php echo json_encode($_POST); ?>; //объект из данных формы, полученных на сервере и преобразованных в JSON
-
-        Object.keys(postData).forEach(function (key) {
-            var elements = document.getElementsByName(key);
-            if (elements.length) {
-                elements.forEach(function (element) {
-                    if (element.type === 'checkbox' || element.type === 'radio') {
-                        element.checked = element.value === postData[key];
-                    } else {
-                        element.value = postData[key];
-                    }
-                });
-            }
-        });
-
-        // Object.keys(postData).forEach(function (key) {
-        //     var element = document.getElementsByName(key)[0];
-        //     if (element) {
-        //         element.value = postData[key];
-        //     }
-        // });
-    </script>
-<?php endif; ?>
-    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-        /* Сохранение данных формы */
         <script>
             var postData = <?php echo json_encode($_POST); ?>; //объект из данных формы, полученных на сервере и преобразованных в JSON
 
@@ -297,8 +472,10 @@
                     });
                 }
             });
+
         </script>
     <?php endif; ?>
+
     
     </body>
 </html>
